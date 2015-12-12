@@ -1,5 +1,13 @@
 package algorithms.demo;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.MyMaze3dGenerator;
 import algorithms.mazeGenerators.Position;
@@ -10,6 +18,8 @@ import algorithms.search.MazeAirDistance;
 import algorithms.search.MazeManhattanDistance;
 import algorithms.search.Solution;
 import algorithms.search.StateCostComparator;
+import io.MyCompressorOutputStream;
+import io.MyDecompressorInputStream;
 
 /**
  * Demo is a main-like class using the other classes.
@@ -47,7 +57,29 @@ public class Demo {
 	}
 	
 	public static void main(String[] args) {
-		Demo d = new Demo();
-		d.run();
+		Maze3dGenerator mg = new MyMaze3dGenerator();
+		//Maze3dGenerator mg = new MyMaze3dGenerator2();
+		Maze3d maze = mg.generate(5, 5, 5);
+		
+		try {
+			OutputStream out = new MyCompressorOutputStream(new FileOutputStream("1.maz"));
+			out.write(maze.toByteArray());
+			out.flush();
+			out.close();
+			
+			InputStream in = new MyDecompressorInputStream(new FileInputStream("1.maz"));
+			byte b[]=new byte[maze.toByteArray().length];
+			in.read(b);
+			in.close();
+			Maze3d loaded=new Maze3d(b);
+			System.out.println(loaded.equals(maze));
+			maze.print();
+			System.out.println("SUP");
+			loaded.print();
+		} catch(FileNotFoundException e) {
+			System.out.println("File Not Found Exception");
+		} catch (IOException e) {
+			System.out.println("IO Exception");
+		}
 	}
 }

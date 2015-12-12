@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,10 +11,28 @@ import java.util.Random;
  *
  */
 
-public class Maze3d {
+public class Maze3d implements Serializable {
 	private int[][][] maze;
 	private Position entrance;
 	private Position exit;
+	
+	public Maze3d() {}
+	
+	public Maze3d(byte[] b) { 
+		this.entrance = new Position(b[0], b[1], b[2]);
+		this.exit = new Position(b[3], b[4], b[5]);
+		this.maze = new int[b[6]][b[7]][b[8]];
+		
+		int index = 9;
+		for (int i = 0; i < b[6]; i++) {
+			for (int j = 0; j < b[7]; j++) {
+				for (int k = 0; k < b[8]; k++) {
+					maze[i][j][k] = b[index];
+					index++;
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Returns the whole maze in 0s and 1s.
@@ -339,4 +358,41 @@ public class Maze3d {
 		
 		throw new IndexOutOfBoundsException("Bad Index");
 	}
+	
+	public byte[] toByteArray() {
+		ArrayList<Byte> compressedMaze = new ArrayList<Byte>();
+		
+		compressedMaze.add(new Byte((byte)entrance.getX()));
+		compressedMaze.add(new Byte((byte)entrance.getY()));
+		compressedMaze.add(new Byte((byte)entrance.getZ()));
+		
+		compressedMaze.add(new Byte((byte)exit.getX()));
+		compressedMaze.add(new Byte((byte)exit.getY()));
+		compressedMaze.add(new Byte((byte)exit.getZ()));
+		
+		compressedMaze.add(new Byte((byte)this.getNumberOfFloors()));
+		compressedMaze.add(new Byte((byte)this.getFloorWidth()));
+		compressedMaze.add(new Byte((byte)this.getFloorLength()));
+		
+		for (int i = 0; i < this.getNumberOfFloors(); i++) {
+			for (int j = 0; j < this.getFloorWidth(); j++) {
+				for (int k = 0; k < this.getFloorLength(); k++) {
+					compressedMaze.add(new Byte((byte)maze[i][j][k]));
+				}
+			}
+		}
+		
+		Byte[] temp = new Byte[compressedMaze.size()];
+		compressedMaze.toArray(temp);
+		byte[] result = new byte[compressedMaze.size()];
+		
+		for (int i = 0; i < temp.length; i++) {
+			result[i] = temp[i];
+		}
+		
+		return result;
+		
+	}
+	
+	
 }
