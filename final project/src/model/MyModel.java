@@ -59,7 +59,7 @@ public class MyModel extends Observable implements Model{
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -269,7 +269,7 @@ public class MyModel extends Observable implements Model{
 		
 		if(cache.get(mazePool.get(mazeName)) != null) {
 			setChanged();
-			notifyObservers(mazePool.get(mazeName));
+			notifyObservers(cache.get(mazePool.get(mazeName)));
 			return;
 		}
 		

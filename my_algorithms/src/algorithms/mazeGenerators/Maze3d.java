@@ -387,7 +387,8 @@ public class Maze3d implements Serializable {
 	
 	@Override
 	public boolean equals(Object arg0) {
-		Maze3d other = (Maze3d)arg0;
+		/*
+		 * Maze3d other = (Maze3d)arg0;
 		boolean flag = true;
 		
 		if(other.maze.length != this.maze.length || other.maze[0].length != this.maze[0].length || other.maze[0][0].length != this.maze[0][0].length)
@@ -404,6 +405,9 @@ public class Maze3d implements Serializable {
 		}
 		
 		return other.entrance.equals(this.entrance) && other.exit.equals(this.exit) && flag;
+		 */
+		
+		return this.hashCode() == ((Maze3d)arg0).hashCode();
 	}
 	
 	@Override
