@@ -4,12 +4,15 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Shell;
 
 public class MazeWindow extends BasicWindow implements View {
 
@@ -100,7 +103,9 @@ public class MazeWindow extends BasicWindow implements View {
 	
 	@Override
 	public void display(String args) {
-		msg.display(args);
+		//msg.display(args);
+		Shell popupShell = new Shell(display);	
+		JOptionPane.showMessageDialog(popupShell, args);
 	}
 	
 	@Override
