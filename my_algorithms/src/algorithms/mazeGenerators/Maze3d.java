@@ -415,17 +415,17 @@ public class Maze3d implements Serializable {
 		StringBuilder result = new StringBuilder();
 		
 		for (int i = 0; i < this.getMaze().length; i++) {
-			result.append("Floor #" + i);
+			result.append("Floor #" + i + "\n");
 			for (int j = 0; j < this.getMaze()[i].length; j++) {
 				for (int k = 0; k < this.getMaze()[i][j].length; k++) {
 					result.append(this.getMaze()[i][j][k] + "\t");
 				}
-				result.append('\n');
+				result.append("\n");
 			}
 		}
 		
-		result.append("Entrance: " + this.getEntrance().getX() + ", " + this.getEntrance().getY() + ", " + this.getEntrance().getZ());
-		result.append("Exit: " + this.getExit().getX() + ", " + this.getExit().getY() + ", " + this.getExit().getZ());
+		result.append("Entrance: " + this.getEntrance().getX() + ", " + this.getEntrance().getY() + ", " + this.getEntrance().getZ() + "\n");
+		result.append("Exit: " + this.getExit().getX() + ", " + this.getExit().getY() + ", " + this.getExit().getZ() + "\n");
 		
 		return result.toString();
 	}
