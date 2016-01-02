@@ -91,12 +91,12 @@ public class Presenter implements Observer {
 							}
 							break;
 						default:
-							System.out.println("Invalid command!");
+							v.display("Invalid Command!");
 					}
 			} catch(IOException e) {
-				e.printStackTrace();
+				v.display(e.getMessage());
 			} catch(Exception e) {
-				e.getMessage();
+				v.display(e.getMessage());
 			}
 		}
 		
