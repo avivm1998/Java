@@ -1,9 +1,11 @@
 package view;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -11,14 +13,23 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+
 public class MazeWindow extends BasicWindow implements View {
 
-	Timer timer;
-	TimerTask task;
+	//Timer timer;
+	//TimerTask task;
 	String fileName;
+	MazeDisplayer mazeDisplayer;
+	Position player;
+	String mazeName;
 	
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
@@ -44,8 +55,54 @@ public class MazeWindow extends BasicWindow implements View {
 	
 	@Override
 	void initWidgets() {
+		shell.setLayout(new GridLayout(2,false));
 		
+		Menu menuBar = new Menu(shell, SWT.BAR);
+		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
+		Menu helpMenu = new Menu(shell, SWT.DROP_DOWN);
 		
+		MenuItem fileHeader = new MenuItem(menuBar, SWT.CASCADE);
+		fileHeader.setText("File");
+		fileHeader.setMenu(fileMenu);
+		
+		MenuItem helpHeader = new MenuItem(menuBar, SWT.CASCADE);
+		helpHeader.setText("Help");
+		helpHeader.setMenu(helpMenu);
+		
+		MenuItem saveFile = new MenuItem(fileMenu, SWT.PUSH);
+		saveFile.setText("Save");
+		
+		MenuItem loadFile = new MenuItem(fileMenu, SWT.PUSH);
+		loadFile.setText("Load");
+		
+		MenuItem propertiesFile = new MenuItem(fileMenu, SWT.PUSH);
+		propertiesFile.setText("Load Properties");
+		propertiesFile.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FileDialog fd = new FileDialog(shell,SWT.OPEN);
+				fd.setText("open");
+				fd.setFilterPath("");
+				String[] filterExt = { "*.xml"};
+				fd.setFilterExtensions(filterExt);
+				fileName = fd.open();				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
+		
+		MenuItem exit = new MenuItem(fileMenu, SWT.PUSH);
+		exit.setText("Exit");
+		
+		MenuItem solve = new MenuItem(helpMenu, SWT.PUSH);
+		solve.setText("Solve");
+		
+		MenuItem hint = new MenuItem(helpMenu, SWT.PUSH);
+		hint.setText("Hint");
+		
+		shell.setMenuBar(menuBar);
 		/*
 		 * Button startButton=new Button(shell, SWT.PUSH);
 		startButton.setText("Start");
@@ -99,7 +156,6 @@ public class MazeWindow extends BasicWindow implements View {
 		});
 		 */
 		
-		shell.setLayout(new GridLayout(2,false));
 		
 		Button generate = new Button(shell, SWT.PUSH);
 		generate.setText("Generate Maze3d");
@@ -109,6 +165,7 @@ public class MazeWindow extends BasicWindow implements View {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				Shell mazeGeneration = new Shell(display);
+				mazeGeneration.setSize(250, 300);
 				mazeGeneration.setLayout(new GridLayout(2,false));
 				
 				Label name = new Label(mazeGeneration, SWT.BORDER);
@@ -151,8 +208,10 @@ public class MazeWindow extends BasicWindow implements View {
 					@Override
 					public void widgetSelected(SelectionEvent arg0) {
 						if(!(nameInput.getText().equals("") || floorsInput.getText().equals("") || floorWidthInput.getText().equals("") || floorLengthInput.getText().equals(""))) {
+							mazeName = nameInput.getText();
 							setChanged();
 							notifyObservers("generate 3d maze " + nameInput.getText() + " " + floorsInput.getText() + " " + floorWidthInput.getText() + " " + floorLengthInput.getText());
+							mazeGeneration.dispose();
 						}
 					}
 					
@@ -169,28 +228,110 @@ public class MazeWindow extends BasicWindow implements View {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 		
-		MazeDisplayer maze=new Maze3D(shell, SWT.BORDER);
-		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
+		/*
+		 * if(arg0.keyCode == SWT.ARROW_DOWN)
+					mazeDisplayer.moveDown();
+				else if(arg0.keyCode == SWT.ARROW_UP)
+					mazeDisplayer.moveUp();
+				else if(arg0.keyCode == SWT.ARROW_LEFT)
+					mazeDisplayer.moveLeft();
+				else if(arg0.keyCode == SWT.ARROW_RIGHT)
+					mazeDisplayer.moveRight();
+		 */
 		
-		Button openProperties = new Button(shell, SWT.PUSH);
-		openProperties.setText("Set Properties");
-		openProperties.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
+			/*
+			 * mazeDisplayer.addKeyListener(new KeyListener() {
+			
+				@Override
+				public void keyReleased(KeyEvent arg0) {}
+				
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					ArrayList<String> pos = new ArrayList<String>(Arrays.asList(maze.getPossibleMoves(character)));
+					switch (arg0.keyCode) {
+					case SWT.PAGE_UP:
+						if (pos.contains(character.getUp().toString())) {
+							player.setX(player.getX()+1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+	
+					case SWT.PAGE_DOWN:
+						if (pos.contains(character.getDown().toString())) {
+							player.setX(player.getX()-1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+						
+					case SWT.ARROW_RIGHT:
+						if (pos.contains(character.getRight().toString())) {
+							player.setX(player.getY()+1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+						
+					case SWT.ARROW_LEFT:
+						if (pos.contains(character.getLeft().toString())) {
+							player.setX(player.getX()-1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+						
+					case SWT.ARROW_DOWN:
+						if (pos.contains(character.getForward().toString())) {
+							player.setX(player.getZ()+1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+						
+					case SWT.ARROW_UP:
+						if (pos.contains(character.getBackward().toString())) {
+							player.setX(player.getX()-1);
+						}else{
+							MessageBox ms = new MessageBox(shell);
+							ms.setMessage("Cant move there");
+							ms.open();
+						}
+						break;
+					}
+					mazeDisplayer.setCharacterPosition(row, col);;
+					
+					switch (m.getCross()) {
+					case 0:
+						setChanged();
+						notifyObservers("display cross section by X "+player.getX()+" for "+mazeName);
+						break;
+					case 1:
+						setChanged();
+						notifyObservers("display cross section by Y "+player.getY()+" for "+mazeName);
+						break;
+					case 2:
+						setChanged();
+						notifyObservers("display cross section by Z "+player.getZ()+" for "+mazeName);;
+						break;
+					}
+					mazeDisplayer.redraw();
+				}
+			});
+			 */
 		
-		openProperties.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				FileDialog fd = new FileDialog(shell,SWT.OPEN);
-				fd.setText("open");
-				fd.setFilterPath("");
-				String[] filterExt = { "*.xml"};
-				fd.setFilterExtensions(filterExt);
-				fileName = fd.open();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
+		
+		
 		
 		/*
 		 * Button displayButton = new Button(shell, SWT.BORDER);
@@ -252,6 +393,7 @@ public class MazeWindow extends BasicWindow implements View {
 				String[] s = args.split("\n");
 				
 				Shell message = new Shell(display);
+				message.setSize(100, 70);
 				message.setLayout(new GridLayout(1, false));
 				
 				Text text = new Text(message, SWT.None);
@@ -260,6 +402,41 @@ public class MazeWindow extends BasicWindow implements View {
 				
 				message.open();
 				
+			}
+		});
+	}
+	
+	public void display(Maze3d maze) {
+		this.getDisplay().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				mazeDisplayer = new Maze3D(shell, SWT.BORDER);
+				mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
+				mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
+				mazeDisplayer.redraw();
+				
+				/*
+				 * mazeDisplayer.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent arg0) {
+						if(arg0.keyCode == SWT.ARROW_DOWN)
+							mazeDisplayer.moveDown();
+						else if(arg0.keyCode == SWT.ARROW_UP)
+							mazeDisplayer.moveUp();
+						else if(arg0.keyCode == SWT.ARROW_LEFT)
+							mazeDisplayer.moveLeft();
+						else if(arg0.keyCode == SWT.ARROW_RIGHT)
+							mazeDisplayer.moveRight();
+					}
+				});
+				 */
 			}
 		});
 	}

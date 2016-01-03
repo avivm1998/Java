@@ -102,7 +102,7 @@ public class Presenter implements Observer {
 		
 		if(arg0 instanceof Model) {
 			if(arg1 instanceof Maze3d) 
-				v.display("The maze is ready!");
+				v.display((Maze3d)arg1);
 			else if(arg1 instanceof Solution) 
 				v.display("The solution is ready!");
 			else if(arg1 instanceof String)

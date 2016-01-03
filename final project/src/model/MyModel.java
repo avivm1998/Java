@@ -19,7 +19,7 @@ import java.util.zip.GZIPOutputStream;
 import algorithms.demo.SearchableMaze3d;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
-import algorithms.mazeGenerators.MyMaze3dGenerator;
+import algorithms.mazeGenerators.MyMaze3dGenerator2;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AStar;
 import algorithms.search.BFS;
@@ -152,7 +152,7 @@ public class MyModel extends Observable implements Model{
 		threadPool.execute(new Runnable() {
 			@Override
 			public void run() {
-				Maze3dGenerator mg = new MyMaze3dGenerator();
+				Maze3dGenerator mg = new MyMaze3dGenerator2();
 				Maze3d maze = mg.generate(x, y, z);
 				mazePool.put(name, maze);
 				setChanged();

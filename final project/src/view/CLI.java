@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import algorithms.mazeGenerators.Maze3d;
+
 /**
  * CLI - Command Line Interface is a View using the console.
  * 
@@ -17,6 +19,11 @@ public class CLI extends MyView {
 	public void display(String args) {
 		System.out.println(args);
 		
+	}
+	
+	@Override
+	public void display(Maze3d maze) {
+		System.out.println(maze.toString());
 	}
 
 	@Override
