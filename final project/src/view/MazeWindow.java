@@ -1,11 +1,6 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -71,9 +66,114 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		MenuItem saveFile = new MenuItem(fileMenu, SWT.PUSH);
 		saveFile.setText("Save");
+		saveFile.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Shell mazeSaver = new Shell(display);
+				mazeSaver.setSize(250, 300);
+				mazeSaver.setLayout(new GridLayout(2,false));
+				
+				Label sourceMazeName = new Label(mazeSaver, SWT.BORDER);
+				sourceMazeName.setText("Wanted maze name: ");
+				sourceMazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text sourceMazeNameInput = new Text(mazeSaver, SWT.BORDER);
+				sourceMazeNameInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				sourceMazeNameInput.setText("");
+				
+				Label destFileName = new Label(mazeSaver, SWT.BORDER);
+				destFileName.setText("Wanted file name and file type: ");
+				destFileName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text destFileNameInput = new Text(mazeSaver, SWT.BORDER);
+				destFileNameInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				destFileNameInput.setText("");
+				
+				Button generate = new Button(mazeSaver, SWT.BORDER);
+				generate.setText("Save!");
+				generate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+				generate.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						if(!(destFileNameInput.getText().equals("") || sourceMazeNameInput.getText().equals(""))) {
+							mazeName = sourceMazeNameInput.getText();
+							setChanged();
+							notifyObservers("save maze " + sourceMazeNameInput.getText() + " " + destFileNameInput.getText());
+							mazeSaver.dispose();
+						}
+						
+						
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent arg0) {}
+				});
+				
+				mazeSaver.open();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			
+			
+		});
 		
 		MenuItem loadFile = new MenuItem(fileMenu, SWT.PUSH);
 		loadFile.setText("Load");
+		loadFile.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Shell mazeLoader = new Shell(display);
+				mazeLoader.setSize(250, 300);
+				mazeLoader.setLayout(new GridLayout(2,false));
+				
+				Label fileName = new Label(mazeLoader, SWT.BORDER);
+				fileName.setText("Wanted file name: ");
+				fileName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text fileNameInput = new Text(mazeLoader, SWT.BORDER);
+				fileNameInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				fileNameInput.setText("");
+				
+				Label destMazeName = new Label(mazeLoader, SWT.BORDER);
+				destMazeName.setText("Wanted destination maze name: ");
+				destMazeName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text mazeNameInput = new Text(mazeLoader, SWT.BORDER);
+				mazeNameInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				mazeNameInput.setText("");
+				
+				Button generate = new Button(mazeLoader, SWT.BORDER);
+				generate.setText("Load!");
+				generate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+				generate.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						if(!(fileNameInput.getText().equals("") || mazeNameInput.getText().equals(""))) {
+							setChanged();
+							notifyObservers("load maze " + fileNameInput.getText() + " " + mazeNameInput.getText());
+							mazeLoader.dispose();
+						}
+						
+						
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent arg0) {}
+				});
+				
+				mazeLoader.open();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			
+			
+		});
 		
 		MenuItem propertiesFile = new MenuItem(fileMenu, SWT.PUSH);
 		propertiesFile.setText("Load Properties");
@@ -95,9 +195,32 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		MenuItem exit = new MenuItem(fileMenu, SWT.PUSH);
 		exit.setText("Exit");
+		exit.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setChanged();
+				notifyObservers("exit");
+				shell.dispose();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
 		
 		MenuItem solve = new MenuItem(helpMenu, SWT.PUSH);
 		solve.setText("Solve");
+		solve.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setChanged();
+				notifyObservers("solve " + mazeName + " bfs");
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
 		
 		MenuItem hint = new MenuItem(helpMenu, SWT.PUSH);
 		hint.setText("Hint");
@@ -387,7 +510,8 @@ public class MazeWindow extends BasicWindow implements View {
 	
 	@Override
 	public void display(String args) {
-		this.getDisplay().syncExec(new Runnable() {
+		/*
+		 * this.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				String[] s = args.split("\n");
@@ -404,9 +528,16 @@ public class MazeWindow extends BasicWindow implements View {
 				
 			}
 		});
+		 */
+		
+		MessageBox msg = new MessageBox(shell, SWT.BORDER);
+		msg.setMessage(args);
+		msg.open();
+		
 	}
 	
 	public void display(Maze3d maze) {
+		
 		this.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -414,7 +545,7 @@ public class MazeWindow extends BasicWindow implements View {
 				mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
 				mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 				mazeDisplayer.redraw();
-				
+				shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);
 				/*
 				 * mazeDisplayer.addKeyListener(new KeyListener() {
 					
