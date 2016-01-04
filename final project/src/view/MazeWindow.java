@@ -548,7 +548,7 @@ public class MazeWindow extends BasicWindow implements View {
 			@Override
 			public void run() {
 				if(mazeDisplayer == null) {
-					mazeDisplayer = new Maze3D(shell, SWT.BORDER);
+					mazeDisplayer = new Maze2D(shell, SWT.BORDER);
 					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
