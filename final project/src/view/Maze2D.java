@@ -4,6 +4,9 @@ package view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -12,7 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class Maze2D extends MazeDisplayer{
 	
-	 public GeneralPlayer player;
+	 public CommonCharacter player;
 	 public Image walls;
 	 public Image winScreen;
 	 
@@ -20,13 +23,14 @@ public class Maze2D extends MazeDisplayer{
 	        super(parent, style);
 	    	
 	        try {
-				walls = new Image(this.getDisplay(), new FileInputStream("C:/Users/moranav/Downloads/wwe.jpg"));
-				winScreen = new Image(this.getDisplay(), new FileInputStream("C:/Users/moranav/Downloads/champ.jpg"));
+				walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 	       
+	        player = new JohnCenaCharacter(getShell());
+	        
 	        // set a white background   (red, green, blue)
 	        setBackground(new Color(null, 255, 255, 255));
 	    	addPaintListener(new PaintListener() {
@@ -41,16 +45,39 @@ public class Maze2D extends MazeDisplayer{
 
 					   int w=width/mazeData[0].length;
 					   int h=height/mazeData.length;
-
+					  
 					   for(int i=0;i<mazeData.length;i++)
 					      for(int j=0;j<mazeData[i].length;j++){
 					          int x=j*w;
 					          int y=i*h;
-					          if(mazeData[i][j]!=0)
-					              e.gc.drawImage(walls, x, y);
+					          if(mazeData[i][j] == 1)
+					        	  e.gc.drawImage(walls, 0, 0, walls.getBounds().width,  walls.getBounds().height, x, y, w, h);
+					          if(player.position.getY() == i && player.position.getZ() == j)
+					        	  player.draw(e, getSize().x, getSize().y, width, height);
 					      }
 					   
 					}
+			});
+	    	
+	    	addKeyListener(new KeyListener() {
+				
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					if(arg0.keyCode == SWT.ARROW_DOWN)
+						moveDown();
+					else if(arg0.keyCode == SWT.ARROW_UP)
+						moveUp();
+					else if(arg0.keyCode == SWT.ARROW_LEFT)
+						moveLeft();
+					else if(arg0.keyCode == SWT.ARROW_RIGHT)
+						moveRight();
+				}
 			});
 	 }
 

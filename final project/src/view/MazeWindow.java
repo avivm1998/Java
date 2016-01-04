@@ -549,14 +549,14 @@ public class MazeWindow extends BasicWindow implements View {
 			public void run() {
 				if(mazeDisplayer == null) {
 					mazeDisplayer = new Maze2D(shell, SWT.BORDER);
-					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
+					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX()));
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
 					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);
 				}
 				
 				else {
-					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
+					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX()));
 					mazeDisplayer.redraw();
 				}
 				/*
