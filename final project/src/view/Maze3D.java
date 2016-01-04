@@ -1,5 +1,8 @@
 package view;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -7,8 +10,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public class Maze3D extends MazeDisplayer {
 
-	public int characterX=0;
-	public int characterY=2;
+	public int characterX=4;
+	public int characterY=4;
 	public int exitX=0;
 	public int exitY=2;
 	
@@ -72,6 +75,27 @@ public class Maze3D extends MazeDisplayer {
 				      }
 				   }
 				
+			}
+		});
+		
+		addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.keyCode == SWT.ARROW_DOWN)
+					moveDown();
+				else if(arg0.keyCode == SWT.ARROW_UP)
+					moveUp();
+				else if(arg0.keyCode == SWT.ARROW_LEFT)
+					moveLeft();
+				else if(arg0.keyCode == SWT.ARROW_RIGHT)
+					moveRight();
 			}
 		});
 	}

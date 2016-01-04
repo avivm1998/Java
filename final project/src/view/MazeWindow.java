@@ -154,6 +154,7 @@ public class MazeWindow extends BasicWindow implements View {
 					@Override
 					public void widgetSelected(SelectionEvent arg0) {
 						if(!(fileNameInput.getText().equals("") || mazeNameInput.getText().equals(""))) {
+							mazeName = mazeNameInput.getText();
 							setChanged();
 							notifyObservers("load maze " + fileNameInput.getText() + " " + mazeNameInput.getText());
 							mazeLoader.dispose();
@@ -215,7 +216,7 @@ public class MazeWindow extends BasicWindow implements View {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				setChanged();
-				notifyObservers("solve " + mazeName + " bfs");
+				notifyObservers("solve " + mazeName + " " + "bfs");
 			}
 			
 			@Override
@@ -530,9 +531,14 @@ public class MazeWindow extends BasicWindow implements View {
 		});
 		 */
 		
-		MessageBox msg = new MessageBox(shell, SWT.BORDER);
-		msg.setMessage(args);
-		msg.open();
+		this.getDisplay().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				MessageBox msg = new MessageBox(shell, SWT.BORDER);
+				msg.setMessage(args);
+				msg.open();
+			}
+		});
 		
 	}
 	
@@ -541,11 +547,18 @@ public class MazeWindow extends BasicWindow implements View {
 		this.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
-				mazeDisplayer = new Maze3D(shell, SWT.BORDER);
-				mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
-				mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
-				mazeDisplayer.redraw();
-				shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);
+				if(mazeDisplayer == null) {
+					mazeDisplayer = new Maze3D(shell, SWT.BORDER);
+					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
+					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
+					mazeDisplayer.redraw();
+					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);
+				}
+				
+				else {
+					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX() + 1));
+					mazeDisplayer.redraw();
+				}
 				/*
 				 * mazeDisplayer.addKeyListener(new KeyListener() {
 					

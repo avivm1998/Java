@@ -38,7 +38,7 @@ public class Maze2D extends MazeDisplayer{
 
 	@Override
 	public void setCharacterPosition(int row, int col) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

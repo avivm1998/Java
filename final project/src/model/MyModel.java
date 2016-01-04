@@ -47,10 +47,12 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Constructor initializing the maze and solution HashMaps.
 	 */
+	@SuppressWarnings("unchecked")
 	public MyModel() {
 		threadPool = Executors.newFixedThreadPool(5);
 		mazePool = new HashMap<String, Maze3d>();
 		solutionPool = new HashMap<String, Solution<Position>>();
+		cache = new HashMap<Maze3d, Solution<Position>>();
 		
 		try {
 			ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cache.zip")));
@@ -258,7 +260,7 @@ public class MyModel extends Observable implements Model{
 		}
 		mazePool.put(mazeName, new Maze3d(decompressedMaze));
 		this.setChanged();
-		this.notifyObservers(mazeName + " was loaded successfully!");
+		this.notifyObservers(mazePool.get(mazeName));
 	}
 	
 
@@ -301,9 +303,6 @@ public class MyModel extends Observable implements Model{
 				notifyObservers(sol);
 			}
 		});
-		
-		setChanged();
-		notifyObservers(null);
 	}
 	
 	@Override
@@ -320,5 +319,7 @@ public class MyModel extends Observable implements Model{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		System.exit(0);
 	}
 }
