@@ -385,6 +385,56 @@ public class Maze3d implements Serializable {
 		
 	}
 	
+	public int[][] getFloorState(int floorNumber) {
+		int[][] result = new int[this.getFloorWidth()][this.getFloorLength()];
+		
+		for (int i = 0; i < this.getFloorWidth(); i++) {
+			for (int j = 0; j < this.getFloorLength(); j++) {
+				if(floorNumber > 0 && floorNumber < this.getNumberOfFloors()) {
+					if(this.getCell(new Position(floorNumber, i, j)) == CellValue.WALL)
+						result[i][j] = 1;
+					
+					else if(this.getCell(new Position(floorNumber, i, j)) == this.getCell(new Position(floorNumber - 1, i, j)) && this.getCell(new Position(floorNumber, i, j)) == this.getCell(new Position(floorNumber + 1, i, j))) {
+						result[i][j] = 4;
+						continue;
+					}
+					
+					else if(this.getCell(new Position(floorNumber - 1, i, j)) == this.getCell(new Position(floorNumber, i, j))) {
+						result[i][j] = 2;
+					}
+
+					else if(this.getCell(new Position(floorNumber + 1, i, j)) == this.getCell(new Position(floorNumber, i, j))) {
+						result[i][j] = 3;
+					}
+						
+					else
+						result[i][j] = 0;
+				}
+				if(floorNumber == 0) {
+					if(this.getCell(new Position(floorNumber, i, j)) == CellValue.WALL)
+						result[i][j] = 1;
+					else if(this.getCell(new Position(floorNumber + 1, i, j)) == this.getCell(new Position(floorNumber, i, j))) {
+						result[i][j] = 3;
+					}
+					else
+						result[i][j] = 0;
+				}
+				
+				if(floorNumber == this.getNumberOfFloors() - 1) {
+					if(this.getCell(new Position(floorNumber, i, j)) == CellValue.WALL)
+						result[i][j] = 1;
+					else if(this.getCell(new Position(floorNumber - 1, i, j)) == this.getCell(new Position(floorNumber, i, j))) {
+						result[i][j] = 2;
+					}
+					else
+						result[i][j] = 0;
+				}
+			}
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public boolean equals(Object arg0) {
 		/*
