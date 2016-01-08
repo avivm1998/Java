@@ -17,13 +17,18 @@ public class Maze2D extends MazeDisplayer{
 	
 	 public CommonCharacter player;
 	 public Image walls;
-	 public Image winScreen;
+	 public Image floorDownPassage;
+	 public Image floorUpPassage;
+	 public Image upAndDownPassage;
 	 
 	 public Maze2D(Composite parent,int style){
 	        super(parent, style);
 	    	
 	        try {
 				walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
+				floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/downArrow.jpg"));
+				floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/upArrow.jpg"));
+				upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/upDownArrow.jpg"));
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -53,7 +58,13 @@ public class Maze2D extends MazeDisplayer{
 					          if(mazeData[i][j] == 1)
 					        	  e.gc.drawImage(walls, 0, 0, walls.getBounds().width,  walls.getBounds().height, x, y, w, h);
 					          if(player.position.getY() == i && player.position.getZ() == j)
-					        	  player.draw(e, getSize().x, getSize().y, width, height);
+					        	  player.draw(e, x, y, w, h);
+					          if(mazeData[i][j] == 2) 
+					        	  e.gc.drawImage(floorDownPassage, 0, 0, floorDownPassage.getBounds().width,  floorDownPassage.getBounds().height, x, y, w, h);
+					          if(mazeData[i][j] == 3) 
+					        	  e.gc.drawImage(floorUpPassage, 0, 0, floorUpPassage.getBounds().width,  floorUpPassage.getBounds().height, x, y, w, h);
+					          if(mazeData[i][j] == 4) 
+					        	  e.gc.drawImage(upAndDownPassage, 0, 0, upAndDownPassage.getBounds().width,  upAndDownPassage.getBounds().height, x, y, w, h);
 					      }
 					   
 					}
@@ -77,6 +88,18 @@ public class Maze2D extends MazeDisplayer{
 						moveLeft();
 					else if(arg0.keyCode == SWT.ARROW_RIGHT)
 						moveRight();
+					else if(arg0.keyCode == SWT.PAGE_DOWN) {
+						if(mazeData[player.getY()][player.getZ()] == 2 || mazeData[player.getY()][player.getZ()] == 4) {
+							setMazeData(maze.getFloorState(currentFloor - 1), currentFloor - 1);
+							redraw();
+						}
+					}
+					else if(arg0.keyCode == SWT.PAGE_UP) {
+						if(mazeData[player.getY()][player.getZ()] == 3 || mazeData[player.getY()][player.getZ()] == 4) {
+							setMazeData(maze.getFloorState(currentFloor + 1), currentFloor + 1);
+							redraw();
+						}
+					}
 				}
 			});
 	 }
@@ -90,37 +113,35 @@ public class Maze2D extends MazeDisplayer{
 	}
 
 	private void moveCharacter(int row,int col){
-		if(row >= 0 && row < mazeData[0].length && col >= 0 && col < mazeData.length && mazeData[col][row] == 0){
+		if(row >= 0 && row < mazeData[0].length && col >= 0 && col < mazeData.length && mazeData[col][row] != 1){
 			player.position.setY(row);
 			player.position.setZ(col);
-			getDisplay().syncExec(new Runnable() {
-				
-				@Override
-				public void run() {
-					redraw();
-				}
-			});
+			redraw();
 		}
 	}
 	
 	@Override
 	public void moveUp() {
 		player.moveForward();
+		redraw();
 	}
 
 	@Override
 	public void moveDown() {
 		player.moveBackward();
+		redraw();
 	}
 
 	@Override
 	public void moveLeft() {
 		player.moveLeft();
+		redraw();
 	}
 
 	@Override
 	public void moveRight() {
 		player.moveRight();
+		redraw();
 	}
 
 }

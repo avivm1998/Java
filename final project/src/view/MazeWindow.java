@@ -1,6 +1,8 @@
 package view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -25,29 +27,12 @@ public class MazeWindow extends BasicWindow implements View {
 	MazeDisplayer mazeDisplayer;
 	Position player;
 	String mazeName;
+	//Maze3d maze;
 	
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
 	}
 
-	/*	private void randomWalk(MazeDisplayer maze){
-		Random r=new Random();
-		boolean b1,b2;
-		b1=r.nextBoolean();
-		b2=r.nextBoolean();
-		if(b1&&b2)
-			maze.moveUp();
-		if(b1&&!b2)
-			maze.moveDown();
-		if(!b1&&b2)
-			maze.moveRight();
-		if(!b1&&!b2)
-			maze.moveLeft();
-		
-		maze.redraw();
-	}
-	 */
-	
 	@Override
 	void initWidgets() {
 		shell.setLayout(new GridLayout(2,false));
@@ -352,6 +337,7 @@ public class MazeWindow extends BasicWindow implements View {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 		
+		
 		/*
 		 * if(arg0.keyCode == SWT.ARROW_DOWN)
 					mazeDisplayer.moveDown();
@@ -511,26 +497,6 @@ public class MazeWindow extends BasicWindow implements View {
 	
 	@Override
 	public void display(String args) {
-		/*
-		 * this.getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				String[] s = args.split("\n");
-				
-				Shell message = new Shell(display);
-				message.setSize(100, 70);
-				message.setLayout(new GridLayout(1, false));
-				
-				Text text = new Text(message, SWT.None);
-				text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, s.length));
-				text.setText(args);
-				
-				message.open();
-				
-			}
-		});
-		 */
-		
 		this.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -543,44 +509,23 @@ public class MazeWindow extends BasicWindow implements View {
 	}
 	
 	public void display(Maze3d maze) {
-		
 		this.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if(mazeDisplayer == null) {
 					mazeDisplayer = new Maze2D(shell, SWT.BORDER);
-					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX()));
+					mazeDisplayer.maze = maze;
+					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
 					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);
+					
 				}
 				
 				else {
-					mazeDisplayer.setMazeData(maze.getCrossSectionByX(maze.getEntrance().getX()));
+					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
 					mazeDisplayer.redraw();
 				}
-				/*
-				 * mazeDisplayer.addKeyListener(new KeyListener() {
-					
-					@Override
-					public void keyReleased(KeyEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void keyPressed(KeyEvent arg0) {
-						if(arg0.keyCode == SWT.ARROW_DOWN)
-							mazeDisplayer.moveDown();
-						else if(arg0.keyCode == SWT.ARROW_UP)
-							mazeDisplayer.moveUp();
-						else if(arg0.keyCode == SWT.ARROW_LEFT)
-							mazeDisplayer.moveLeft();
-						else if(arg0.keyCode == SWT.ARROW_RIGHT)
-							mazeDisplayer.moveRight();
-					}
-				});
-				 */
 			}
 		});
 	}

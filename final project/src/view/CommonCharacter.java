@@ -58,7 +58,7 @@ public abstract class CommonCharacter {
 	 * moving the character up
 	 */
 	public void moveUp() {
-		position.setX(position.getX() + 1);
+		position.setX(position.getX() - 1);
 	}
 	
 	/**
@@ -72,21 +72,21 @@ public abstract class CommonCharacter {
 	 * moving the character left
 	 */
 	public void moveLeft() {
-		position.setY(position.getZ() - 1);
+		position.setZ(position.getZ() - 1);
 	}
 	
 	/**
 	 * moving the character right
 	 */
 	public void moveRight() {
-		position.setY(position.getZ() + 1);
+		position.setZ(position.getZ() + 1);
 	}
 	
 	/**
 	 * moving the character forward
 	 */
 	public void moveForward() {
-		position.setX(position.getY() - 1);
+		position.setY(position.getY() - 1);
 	}
 	
 	/**
