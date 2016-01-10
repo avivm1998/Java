@@ -18,16 +18,13 @@ import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 public class MazeWindow extends BasicWindow implements View {
-
-	//Timer timer;
-	//TimerTask task;
 	String fileName;
 	MazeDisplayer mazeDisplayer;
 	Position player;
 	String mazeName;
-	//Maze3d maze;
 	
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
@@ -143,9 +140,7 @@ public class MazeWindow extends BasicWindow implements View {
 							setChanged();
 							notifyObservers("load maze " + fileNameInput.getText() + " " + mazeNameInput.getText());
 							mazeLoader.dispose();
-						}
-						
-						
+						}	
 					}
 					
 					@Override
@@ -200,6 +195,7 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				mazeDisplayer.showSolution = true;
 				setChanged();
 				notifyObservers("solve " + mazeName + " " + "bfs");
 			}
@@ -212,59 +208,6 @@ public class MazeWindow extends BasicWindow implements View {
 		hint.setText("Hint");
 		
 		shell.setMenuBar(menuBar);
-		/*
-		 * Button startButton=new Button(shell, SWT.PUSH);
-		startButton.setText("Start");
-		startButton.setLayoutData(new GridData(SWT.FILL, SWT.None, false, false, 1, 1));
-				
-		
-		//MazeDisplayer maze=new Maze2D(shell, SWT.BORDER);		
-		MazeDisplayer maze=new Maze3D(shell, SWT.BORDER);
-		maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
-		
-		Button stopButton=new Button(shell, SWT.PUSH);
-		stopButton.setText("Stop");
-		stopButton.setLayoutData(new GridData(SWT.None, SWT.None, false, false, 1, 1));
-		stopButton.setEnabled(false);
-		startButton.addSelectionListener(new SelectionListener() {
-		@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				timer=new Timer();
-				task=new TimerTask() {
-					@Override
-					public void run() {
-						display.syncExec(new Runnable() {
-							@Override
-							public void run() {
-								randomWalk(maze);
-							}
-						});
-					}
-				};				
-				timer.scheduleAtFixedRate(task, 0, 100);				
-				startButton.setEnabled(false);
-				stopButton.setEnabled(true);
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
-		
-		stopButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				task.cancel();
-				timer.cancel();
-				startButton.setEnabled(true);
-				stopButton.setEnabled(false);
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});
-		 */
-		
 		
 		Button generate = new Button(shell, SWT.PUSH);
 		generate.setText("Generate Maze3d");
@@ -317,6 +260,10 @@ public class MazeWindow extends BasicWindow implements View {
 					@Override
 					public void widgetSelected(SelectionEvent arg0) {
 						if(!(nameInput.getText().equals("") || floorsInput.getText().equals("") || floorWidthInput.getText().equals("") || floorLengthInput.getText().equals(""))) {
+							if(mazeDisplayer != null){
+								mazeDisplayer.showSolution = false;
+								mazeDisplayer.solution = null;
+							}
 							mazeName = nameInput.getText();
 							setChanged();
 							notifyObservers("generate 3d maze " + nameInput.getText() + " " + floorsInput.getText() + " " + floorWidthInput.getText() + " " + floorLengthInput.getText());
@@ -523,9 +470,21 @@ public class MazeWindow extends BasicWindow implements View {
 				}
 				
 				else {
+					mazeDisplayer.maze = maze;
 					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
 					mazeDisplayer.redraw();
 				}
+			}
+		});
+	}
+	
+	@Override
+	public void display(Solution<Position> sol) {
+		mazeDisplayer.solution = sol;
+		getDisplay().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				mazeDisplayer.redraw();
 			}
 		});
 	}

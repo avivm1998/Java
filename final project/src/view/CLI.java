@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 
 /**
  * CLI - Command Line Interface is a View using the console.
@@ -26,6 +28,12 @@ public class CLI extends MyView {
 		System.out.println(maze.toString());
 	}
 
+	@Override
+	public void display(Solution<Position> sol) {
+		System.out.println(sol.toString());
+		
+	}
+	
 	@Override
 	public void getUserCommand() {
 		String command = null;

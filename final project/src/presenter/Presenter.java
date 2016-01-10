@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import model.Model;
 import view.View;
@@ -104,7 +105,7 @@ public class Presenter implements Observer {
 			if(arg1 instanceof Maze3d) 
 				v.display((Maze3d)arg1);
 			else if(arg1 instanceof Solution) 
-				v.display("The solution is ready!");
+				v.display((Solution<Position>)arg1);
 			else if(arg1 instanceof String)
 				v.display((String)arg1);
 			else
