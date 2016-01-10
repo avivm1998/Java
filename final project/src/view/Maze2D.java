@@ -20,21 +20,23 @@ public class Maze2D extends MazeDisplayer{
 	 public Image floorDownPassage;
 	 public Image floorUpPassage;
 	 public Image upAndDownPassage;
+	 public Image goal;
 	 
-	 public Maze2D(Composite parent,int style){
+	 public Maze2D(Composite parent,int style, CommonCharacter player){
 	        super(parent, style);
 	    	
 	        try {
 				walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
 				floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/downArrow.jpg"));
 				floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/upArrow.jpg"));
-				upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/upDownArrow.jpg"));
+				upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
+				goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 	       
-	        player = new JohnCenaCharacter(getShell());
+	        this.player = player;
 	        
 	        // set a white background   (red, green, blue)
 	        setBackground(new Color(null, 255, 255, 255));
@@ -65,6 +67,8 @@ public class Maze2D extends MazeDisplayer{
 					        	  e.gc.drawImage(floorUpPassage, 0, 0, floorUpPassage.getBounds().width,  floorUpPassage.getBounds().height, x, y, w, h);
 					          if(mazeData[i][j] == 4) 
 					        	  e.gc.drawImage(upAndDownPassage, 0, 0, upAndDownPassage.getBounds().width,  upAndDownPassage.getBounds().height, x, y, w, h);
+					          if(mazeData[i][j] == 5) 
+					        	  e.gc.drawImage(goal, 0, 0, goal.getBounds().width,  goal.getBounds().height, x, y, w, h);
 					      }
 					   
 					}
@@ -122,26 +126,38 @@ public class Maze2D extends MazeDisplayer{
 	
 	@Override
 	public void moveUp() {
-		player.moveForward();
-		redraw();
+		if(player.getY() > 0)	
+			if(mazeData[player.getY() - 1][player.getZ()] != 1) {
+				player.moveForward();
+				redraw();
+			}
 	}
 
 	@Override
 	public void moveDown() {
-		player.moveBackward();
-		redraw();
+		if(player.getY() < mazeData.length - 1)	
+			if(mazeData[player.getY() + 1][player.getZ()] != 1) {
+				player.moveBackward();
+				redraw();
+			}
 	}
 
 	@Override
 	public void moveLeft() {
-		player.moveLeft();
-		redraw();
+		if(player.getZ() > 0)
+			if(mazeData[player.getY()][player.getZ() - 1] != 1) {
+				player.moveLeft();
+				redraw();
+			}
 	}
 
 	@Override
 	public void moveRight() {
-		player.moveRight();
-		redraw();
+		if(player.getZ() < mazeData[0].length - 1)
+			if(mazeData[player.getY()][player.getZ() + 1] != 1)	{
+				player.moveRight();
+				redraw();
+			}
 	}
 
 }

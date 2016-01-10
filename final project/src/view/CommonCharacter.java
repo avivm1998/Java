@@ -14,9 +14,9 @@ public abstract class CommonCharacter {
 	 * 
 	 * @param parent - the window in which the character is
 	 */
-	public CommonCharacter(Shell parent) {
+	public CommonCharacter(Shell parent, Position start) {
 		this.parent = parent;
-		this.position = new Position(0, 4, 4);
+		this.position = start;
 	}
 	
 	/**

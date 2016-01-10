@@ -390,6 +390,11 @@ public class Maze3d implements Serializable {
 		
 		for (int i = 0; i < this.getFloorWidth(); i++) {
 			for (int j = 0; j < this.getFloorLength(); j++) {
+				if(floorNumber == this.getGoalPosition().getX() && i == this.getGoalPosition().getY() && j == this.getGoalPosition().getZ()) {
+					result[i][j] = 5;
+					continue;
+				}
+				
 				if(floorNumber > 0 && floorNumber < this.getNumberOfFloors()) {
 					if(this.getCell(new Position(floorNumber, i, j)) == CellValue.WALL)
 						result[i][j] = 1;

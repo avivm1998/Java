@@ -7,12 +7,14 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
+import algorithms.mazeGenerators.Position;
+
 public class JohnCenaCharacter extends CommonCharacter {
 	
 	Image character;
 	
-	public JohnCenaCharacter(Shell parent) {
-		super(parent);
+	public JohnCenaCharacter(Shell parent, Position start) {
+		super(parent, start);
 		try {
 			character = new Image(parent.getDisplay(), new FileInputStream("resources/john_cena.jpg"));
 		} catch (FileNotFoundException e) {
