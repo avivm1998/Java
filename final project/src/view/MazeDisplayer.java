@@ -13,7 +13,7 @@ import algorithms.search.Solution;
 // (2) other programmers can use it naturally
 public abstract class MazeDisplayer extends Canvas{
 	
-	// just as a stub...
+	public CommonCharacter player;
 	int[][] mazeData;
 	int currentFloor;
 	Maze3d maze;

@@ -5,6 +5,7 @@ import java.io.File;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import presenter.Properties;
 
 public interface Model {
 	void generateMaze3d(String mazeName, int x, int y, int z) throws Exception;
@@ -15,5 +16,6 @@ public interface Model {
 	Maze3d getMaze3d(String mazeName) throws Exception;
 	int[][] getCrossSection(String mazeName, String dimension, int value) throws Exception;
 	Solution<Position> getSolution(String mazeName) throws Exception;
+	void setProperties(Properties settings);
 	void exit();
 }

@@ -1,6 +1,7 @@
 package view;
 
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -18,30 +19,32 @@ import algorithms.search.State;
 
 public class Maze2D extends MazeDisplayer{
 	
-	 public CommonCharacter player;
+
 	 public Image walls;
 	 public Image floorDownPassage;
 	 public Image floorUpPassage;
 	 public Image upAndDownPassage;
 	 public Image goal;
 	 public Image winScreen;
+	 public Image solutionPath;
 	 
 	 public Maze2D(Composite parent,int style, CommonCharacter player){
 	        super(parent, style);
 	    	
 	        try {
 				walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
-				floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/downArrow.jpg"));
-				floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/upArrow.jpg"));
+				floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
+				floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
 				upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
 				goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
 				winScreen = new Image(this.getDisplay(), new FileInputStream("resources/win_screen.png"));
+				solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/solution_path.jpg"));
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			} 
 	       
-	        this.player = player;
+	       this.player = player;
 	        
 	        // set a white background   (red, green, blue)
 	        setBackground(new Color(null, 255, 255, 255));
@@ -49,8 +52,8 @@ public class Maze2D extends MazeDisplayer{
 				
 				@Override
 				public void paintControl(PaintEvent e) {
-					   e.gc.setForeground(new Color(null,0,255,0));
-					   e.gc.setBackground(new Color(null,0,255,0));
+					   e.gc.setForeground(new Color(null,0,0,0));
+					   e.gc.setBackground(new Color(null,0,0,0));
 
 					   int width=getSize().x;
 					   int height=getSize().y;
@@ -62,10 +65,12 @@ public class Maze2D extends MazeDisplayer{
 					      for(int j=0;j<mazeData[i].length;j++){
 					          int x=j*w;
 					          int y=i*h;
-					          if(player.position.equals(maze.getGoalPosition()))
+					          if(player.position.equals(maze.getGoalPosition())) {
 								  e.gc.drawImage(winScreen, 0, 0, winScreen.getBounds().width, winScreen.getBounds().height, 0, 0, width, height);
+								  return;
+					          }
 					          if(showSolution == true && solution.getSolution().indexOf(new State<Position>(new Position(currentFloor, i, j))) != -1)
-					        	  e.gc.drawRectangle(x, y, w, h);
+					        	  e.gc.drawImage(solutionPath, 0, 0, solutionPath.getBounds().width,  solutionPath.getBounds().height, x, y, w, h);
 					          if(mazeData[i][j] == 1)
 					        	  e.gc.drawImage(walls, 0, 0, walls.getBounds().width,  walls.getBounds().height, x, y, w, h);
 					          if(player.position.getY() == i && player.position.getZ() == j)

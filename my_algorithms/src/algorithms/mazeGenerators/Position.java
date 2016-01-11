@@ -1,5 +1,7 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 /**
  * Position is a three dimensional coordinate.
  * 
@@ -7,7 +9,7 @@ package algorithms.mazeGenerators;
  *
  */
 
-public class Position {
+public class Position implements Serializable{
 	private int x;
 	private int y;
 	private int z;

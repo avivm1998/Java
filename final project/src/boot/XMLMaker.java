@@ -16,9 +16,7 @@ public class XMLMaker {
 
 		Properties settings = new Properties();
 		settings.setThreadPoolSize(10);
-		settings.setSearchingAlogrithm("BFS");
-		settings.setMazeGenerationAlgorithm("Prim");
-		settings.setViewType("CLI");
+		settings.setSearchingAlogrithm("bfs");
 
 		FileOutputStream fos = new FileOutputStream("Properties.xml");
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -31,8 +29,6 @@ public class XMLMaker {
 		properties = (Properties)decoder.readObject();
 		System.out.println(properties.getThreadPoolSize());
 		System.out.println(properties.getSearchingAlogrithm());
-		System.out.println(properties.getMazeGenerationAlgorithm());
-		System.out.println(properties.getViewType());
 		decoder.close();
 
 	}

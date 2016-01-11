@@ -13,7 +13,6 @@ public class Run {
 		//CLI cli = new CLI();
 		MazeWindow v = new MazeWindow("JOHN CENA", 1000, 500);
 		Presenter p = new Presenter(m, v);
-		//Properties settings = new Properties();
 		m.addObserver(p);
 		v.addObserver(p);
 		v.getUserCommand();

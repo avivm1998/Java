@@ -20,7 +20,7 @@ public class MyMaze3dGenerator2 extends CommonMaze3dGenerator {
 		
 		Position exit = new Position(rand.nextInt(x), rand.nextInt(y), rand.nextInt(z));
 		while(maze.getCell(exit) == CellValue.WALL || exit == entrance) {
-			exit = maze.getNeighborCell(exit, Direction.intToDirection(rand.nextInt(6)));
+			exit = new Position(rand.nextInt(x), rand.nextInt(y), rand.nextInt(z));
 		}
 		
 		maze.setExit(exit);

@@ -43,61 +43,65 @@ public class Presenter implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if(arg0 instanceof View) {
-			try {
-					String[] parameters = ((String)arg1).split(" ");
-				
-					switch(parameters[0]) {
-						case "exit":
-							commandPool.get("exit").doCommand(null);
-							return;
-						case "dir":
-							commandPool.get("dir").doCommand(parameters[1]);
-							break;
-						case "generate":
-							commandPool.get("generate").doCommand(parameters[3] + " " + parameters[4] + " " + parameters[5] + " " + parameters[6]);
-							break;
-						case "save":
-							commandPool.get("save").doCommand(parameters[2] + " " + parameters[3]);
-							break;
-						case "load":
-							commandPool.get("load").doCommand(parameters[2] + " " + parameters[3]);
-							break;
-						case "maze":
-							commandPool.get("maze size").doCommand(parameters[2]);
-							break;
-						case "file":
-							commandPool.get("file size").doCommand(parameters[2]);
-							break;
-						case "solve": 
-							commandPool.get("solve").doCommand(parameters[1] + " " + parameters[2]);
-							break;
-						case "display":
-							switch (parameters[1]) {
-								case "cross":
-									if(parameters[4].equals("X"))
-										commandPool.get("display cross x").doCommand(parameters[5] + " " + parameters[7]);
-									else if(parameters[4].equals("Y"))
-										commandPool.get("display cross y").doCommand(parameters[5] + " " + parameters[7]);
-									else
-										commandPool.get("display cross z").doCommand(parameters[5] + " " + parameters[7]);
-									break;
-									
-								case "solution":
-									commandPool.get("solution").doCommand(parameters[2]);
-									break;
-	
-								default:
-									commandPool.get("display").doCommand(parameters[1]);
-									break;
-							}
-							break;
-						default:
-							v.display("Invalid Command!");
-					}
-			} catch(IOException e) {
-				v.display(e.getMessage());
-			} catch(Exception e) {
-				v.display(e.getMessage());
+			if(arg1 instanceof Properties) {
+				m.setProperties((Properties)arg1);
+			}
+			else
+				try {
+						String[] parameters = ((String)arg1).split(" ");
+					
+						switch(parameters[0]) {
+							case "exit":
+								commandPool.get("exit").doCommand(null);
+								return;
+							case "dir":
+								commandPool.get("dir").doCommand(parameters[1]);
+								break;
+							case "generate":
+								commandPool.get("generate").doCommand(parameters[3] + " " + parameters[4] + " " + parameters[5] + " " + parameters[6]);
+								break;
+							case "save":
+								commandPool.get("save").doCommand(parameters[2] + " " + parameters[3]);
+								break;
+							case "load":
+								commandPool.get("load").doCommand(parameters[2] + " " + parameters[3]);
+								break;
+							case "maze":
+								commandPool.get("maze size").doCommand(parameters[2]);
+								break;
+							case "file":
+								commandPool.get("file size").doCommand(parameters[2]);
+								break;
+							case "solve": 
+								commandPool.get("solve").doCommand(parameters[1] + " " + parameters[2]);
+								break;
+							case "display":
+								switch (parameters[1]) {
+									case "cross":
+										if(parameters[4].equals("X"))
+											commandPool.get("display cross x").doCommand(parameters[5] + " " + parameters[7]);
+										else if(parameters[4].equals("Y"))
+											commandPool.get("display cross y").doCommand(parameters[5] + " " + parameters[7]);
+										else
+											commandPool.get("display cross z").doCommand(parameters[5] + " " + parameters[7]);
+										break;
+										
+									case "solution":
+										commandPool.get("solution").doCommand(parameters[2]);
+										break;
+		
+									default:
+										commandPool.get("display").doCommand(parameters[1]);
+										break;
+								}
+								break;
+							default:
+								v.display("Invalid Command!");
+						}
+				} catch(IOException e) {
+					v.display(e.getMessage());
+				} catch(Exception e) {
+					v.display(e.getMessage());
 			}
 		}
 		

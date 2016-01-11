@@ -1,5 +1,6 @@
 package model;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +18,6 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import algorithms.demo.SearchableMaze3d;
-import algorithms.mazeGenerators.CellValue;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.MyMaze3dGenerator2;
@@ -31,6 +31,7 @@ import algorithms.search.Solution;
 import algorithms.search.StateCostComparator;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
+import presenter.Properties;
 
 /**
  *  MyModel is a concrete Model in the MVC pattern, connecting the model and view and holds all the valid commands.
@@ -44,13 +45,13 @@ public class MyModel extends Observable implements Model{
 	private HashMap<String, Maze3d> mazePool;
 	private HashMap<String, Solution<Position>> solutionPool;
 	private HashMap<Maze3d, Solution<Position>> cache;
+	private Properties settings;
 	
 	/**
 	 * Constructor initializing the maze and solution HashMaps.
 	 */
 	@SuppressWarnings("unchecked")
 	public MyModel() {
-		threadPool = Executors.newFixedThreadPool(5);
 		mazePool = new HashMap<String, Maze3d>();
 		solutionPool = new HashMap<String, Solution<Position>>();
 		cache = new HashMap<Maze3d, Solution<Position>>();
@@ -59,8 +60,8 @@ public class MyModel extends Observable implements Model{
 			ObjectInputStream in = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cache.zip")));
 			cache = (HashMap<Maze3d, Solution<Position>>) in.readObject();
 			in.close();
-			
-		} catch (FileNotFoundException e) {
+		} catch (EOFException e) {}
+		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		} catch (IOException e) {
@@ -71,7 +72,7 @@ public class MyModel extends Observable implements Model{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ExecutorService getThreadPool() {
 		return threadPool;
 	}
@@ -137,6 +138,12 @@ public class MyModel extends Observable implements Model{
 		if(mazePool.get(args) == null)
 			throw new Exception("There is no maze named " + args);
 		return solutionPool.get(args);
+	}
+		
+	@Override
+	public void setProperties(Properties settings) {
+		this.settings = settings;
+		threadPool = Executors.newFixedThreadPool(settings.getThreadPoolSize());
 	}
 	
 	@Override
