@@ -12,8 +12,10 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -159,14 +161,15 @@ public class MyModel extends Observable implements Model{
 		if(x < 0 || y < 0 || z < 0) 
 			throw new Exception("Sizes can not be negative");
 		
-		threadPool.execute(new Runnable() {
+		Future<Maze3d> mazeFuture = threadPool.submit(new Callable<Maze3d>() {
 			@Override
-			public void run() {
+			public Maze3d call() throws Exception {
 				Maze3dGenerator mg = new MyMaze3dGenerator2();
 				Maze3d maze = mg.generate(x, y, z);
 				mazePool.put(name, maze);
 				setChanged();
 				notifyObservers(maze);
+				return maze;
 			}
 		});
 		
@@ -266,7 +269,14 @@ public class MyModel extends Observable implements Model{
 				System.out.println("IO Exception");
 			}
 		}
-		mazePool.put(mazeName, new Maze3d(decompressedMaze));
+		Future<Maze3d> mazeFuture = threadPool.submit(new Callable<Maze3d>() {
+			@Override
+			public Maze3d call() throws Exception {
+				Maze3d maze = new Maze3d(decompressedMaze);
+				mazePool.put(mazeName, maze);
+				return maze;
+			}
+		});
 		this.setChanged();
 		this.notifyObservers(mazePool.get(mazeName));
 	}
@@ -283,9 +293,9 @@ public class MyModel extends Observable implements Model{
 			return;
 		}
 		
-		threadPool.execute(new Runnable() {
+		Future<Solution<Position>> solutionFuture = threadPool.submit(new Callable<Solution<Position>>() {
 			@Override
-			public void run() {
+			public Solution<Position> call() throws Exception {
 				Maze3d maze = mazePool.get(mazeName);
 				CommonSearcher<Position> cs = null;
 				SearchableMaze3d s = null;
@@ -309,6 +319,7 @@ public class MyModel extends Observable implements Model{
 				cache.put(s.getMaze(), sol);
 				setChanged();
 				notifyObservers(sol);
+				return sol;
 			}
 		});
 	}
