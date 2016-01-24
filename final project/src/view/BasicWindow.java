@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * 
+ * A basic window display that is used in any window. 
  * 
  * @author Aviv Moran & Ayal Naim
  *
@@ -18,10 +18,11 @@ public abstract class BasicWindow extends Observable implements Runnable {
 	Shell shell;
 	
 	/**
+	 * Constructor with parameters.
 	 * 
-	 * @param title
-	 * @param width
-	 * @param height
+	 * @param title  [IN] the window's title.
+	 * @param width  [IN] the window's width.
+	 * @param height [IN] the window's height.
 	 */
  	public BasicWindow(String title, int width,int height) {
  		display = new Display();
@@ -31,6 +32,7 @@ public abstract class BasicWindow extends Observable implements Runnable {
 	}
  	
  	/**
+ 	 * Returns the display.
  	 * 
  	 * @return
  	 */
@@ -40,8 +42,9 @@ public abstract class BasicWindow extends Observable implements Runnable {
 
 
  	/**
+ 	 * Sets the display.
  	 * 
- 	 * @param display
+ 	 * @param display [IN] the display.
  	 */
 	public void setDisplay(Display display) {
 		this.display = display;
@@ -49,6 +52,7 @@ public abstract class BasicWindow extends Observable implements Runnable {
 
 
 	/**
+	 * Returns the shell.
 	 * 
 	 * @return
 	 */
@@ -58,16 +62,16 @@ public abstract class BasicWindow extends Observable implements Runnable {
 
 
 	/**
+	 * Sets the shell.
 	 * 
-	 * @param shell
+	 * @param shell [IN] the shell.
 	 */
 	public void setShell(Shell shell) {
 		this.shell = shell;
 	}
 
-
 	/**
-	 * 
+	 * Initializes the widgets as implemented.
 	 */
 	abstract void initWidgets();
 

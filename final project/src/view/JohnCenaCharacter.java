@@ -10,8 +10,9 @@ import org.eclipse.swt.widgets.Shell;
 import algorithms.mazeGenerators.Position;
 
 /**
+ * JohnCenaCharacter is the class that represents our character.
  * 
- * @author naimay
+ * @author Aviv Moran & Ayal Naim
  *
  */
 public class JohnCenaCharacter extends CommonCharacter {
@@ -19,9 +20,10 @@ public class JohnCenaCharacter extends CommonCharacter {
 	Image character;
 	
 	/**
+	 * Constructor with parameters.
 	 * 
-	 * @param parent
-	 * @param start
+	 * @param parent [IN] the shell.
+	 * @param start  [IN] the start position.
 	 */
 	public JohnCenaCharacter(Shell parent, Position start) {
 		super(parent, start);
@@ -31,10 +33,7 @@ public class JohnCenaCharacter extends CommonCharacter {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * 
-	 */
+	
 	@Override
 	public void draw(PaintEvent e, int x, int y, int width, int height) {
 		e.gc.drawImage(character, 0, 0, character.getBounds().width, character.getBounds().height, x, y, width, height);

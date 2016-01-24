@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 import algorithms.mazeGenerators.Position;
 
 /**
+ * CommonCharacter is a class that allows us to change our character easily.
  * 
  * @author Aviv Moran & Ayal Naim
  *
@@ -16,8 +17,10 @@ public abstract class CommonCharacter {
 	Shell parent;
 	
 	/**
+	 * Constructor with parameters.
 	 * 
-	 * @param parent - the window in which the character is
+	 * @param parent [IN] the window in which the character is in.
+	 * @param start  [IN] the start position.
 	 */
 	public CommonCharacter(Shell parent, Position start) {
 		this.parent = parent;
@@ -25,6 +28,8 @@ public abstract class CommonCharacter {
 	}
 	
 	/**
+	 * Returns the character's position. 
+	 * 
 	 * @return the position
 	 */
 	public Position getPosition() {
@@ -32,7 +37,9 @@ public abstract class CommonCharacter {
 	}
 
 	/**
-	 * @param position the position to set
+	 * Sets the position.
+	 * 
+	 * @param position [IN] the position to set
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
@@ -104,11 +111,11 @@ public abstract class CommonCharacter {
 	/**
 	 * drawing the character 
 	 * 
-	 * @param e - the {@link PaintEvent}
-	 * @param x - the x value in the canvas
-	 * @param y - the y value in the canvas
-	 * @param width - the width of the character
-	 * @param height - the height of the character
+	 * @param e      [IN] the {@link PaintEvent}
+	 * @param x      [IN] the x value in the canvas
+	 * @param y      [IN] the y value in the canvas
+	 * @param width  [IN] the width of the character
+	 * @param height [IN] the height of the character
 	 */
 	public abstract void draw(PaintEvent e,int x,int y,int width,int height);
 }

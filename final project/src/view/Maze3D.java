@@ -9,7 +9,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * 
+ * Maze3D is a 3D maze displayer.
  * 
  * @author Aviv Moran & Ayal Naim
  *
@@ -21,6 +21,13 @@ public class Maze3D extends MazeDisplayer {
 	public int exitX=0;
 	public int exitY=2;
 	
+	/**
+	 * Prints a cube.
+	 * 
+	 * @param p [IN]
+	 * @param h [IN]
+	 * @param e [IN]
+	 */
 	private void paintCube(double[] p,double h,PaintEvent e){
         int[] f=new int[p.length];
         for(int k=0;k<f.length;f[k]=(int)Math.round(p[k]),k++);
@@ -39,10 +46,12 @@ public class Maze3D extends MazeDisplayer {
         e.gc.fillPolygon(r);
 		
 	}
+	
 	/**
+	 * Constructor with parameters.
 	 * 
-	 * @param parent
-	 * @param style
+	 * @param parent [IN]
+	 * @param style  [IN]
 	 */
 	public Maze3D(Composite parent, int style) {
 		super(parent, style);
@@ -112,8 +121,9 @@ public class Maze3D extends MazeDisplayer {
 	}
 	
 	/**
+	 * Moves the character.
 	 * 
-	 * @param x
+	 * @param x [IN]
 	 * @param y
 	 */
 	private void moveCharacter(int x,int y){
