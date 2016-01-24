@@ -1,10 +1,11 @@
 package view;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -12,32 +13,29 @@ import java.util.concurrent.TimeUnit;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import presenter.Properties;
 
 public class MyServer implements View {
-
-	int port;
+	Properties settings;
 	ServerSocket server;
-	ClientHandler handler;
-	int numOfClients;
+	public MyClientHandler handler;
 	ExecutorService threadPool;
-	
 	volatile boolean stop;
-	
 	Thread mainServerThread; 
-	
 	int clientsHandled = 0;
 	
-	public MyServer(int port, ClientHandler ch ,int numOfClients) {
-		this.port = port;
-		this.handler = ch;
-		this.numOfClients = numOfClients;
+	public MyServer(Properties settings) {
+		this.settings = settings;
+		this.handler = new MyClientHandler();
 	}
 	
 	
 	public void start() throws Exception{
-		server = new ServerSocket(port);
+		server = new ServerSocket(settings.getPort());
 		server.setSoTimeout(10 * 1000);
-		threadPool=Executors.newFixedThreadPool(numOfClients);
+		threadPool=Executors.newFixedThreadPool(settings.getNumOfClients());
+		
+		System.out.println("Server is alive and waiting for clients to connect! ");
 		
 		mainServerThread = new Thread(new Runnable() {			
 			@Override
@@ -98,31 +96,53 @@ public class MyServer implements View {
 
 	@Override
 	public void display(String args) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(args);
 	}
 
 
 	@Override
 	public void display(Maze3d maze) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(maze.toString());
 	}
 
 
 	@Override
 	public void display(Solution<Position> sol) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(sol.toString());
 	}
 
-
+	public void sendMazeToClient(Maze3d maze, OutputStream outToServer) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			out.writeObject(maze);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendSolutionToClient(Solution<Position> solution, OutputStream outToServer) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			out.writeObject(solution);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendStringToClient(String arg, OutputStream outToServer) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			out.writeObject(arg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void getUserCommand() {
 		try {
 			this.start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,6 +1,7 @@
 package presenter;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +16,7 @@ public class Presenter implements Observer {
 	private HashMap<String, Command> commandPool;
 	private Model m;
 	private View v;
+	private OutputStream out;
 	
 	public Presenter(Model m, View v) {
 		this.m = m;
@@ -105,14 +107,16 @@ public class Presenter implements Observer {
 		}
 		
 		if(arg0 instanceof Model) {
+			if(arg1 instanceof OutputStream) 
+				out = (OutputStream)arg1;
 			if(arg1 instanceof Maze3d)
-				v.display((Maze3d)arg1);
+				v.sendMazeToClient((Maze3d) arg1, out);
 			else if(arg1 instanceof Solution) 
-				v.display((Solution<Position>)arg1);
+				v.sendSolutionToClient((Solution<Position>)arg1, out);
 			else if(arg1 instanceof String)
-				v.display((String)arg1);
+				v.sendStringToClient((String)arg1, out);
 			else
-				v.display("Something went wrong!");
+				v.sendStringToClient("Something went wrong!", out);
 		}
 	}
 

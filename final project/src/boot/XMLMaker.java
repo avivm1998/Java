@@ -15,8 +15,6 @@ public class XMLMaker {
 	public static void main(String[] args) throws Exception {
 
 		Properties settings = new Properties();
-		settings.setThreadPoolSize(10);
-		settings.setSearchingAlogrithm("bfs");
 
 		FileOutputStream fos = new FileOutputStream("Properties.xml");
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -27,8 +25,8 @@ public class XMLMaker {
 		XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream("Properties.xml")));
 		Properties properties = new Properties();
 		properties = (Properties)decoder.readObject();
-		System.out.println(properties.getThreadPoolSize());
-		System.out.println(properties.getSearchingAlogrithm());
+		System.out.println(properties.getPort());
+		System.out.println(properties.getIp());
 		decoder.close();
 
 	}

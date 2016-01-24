@@ -11,6 +11,9 @@ public class MyClientHandler extends Observable implements ClientHandler {
 
 	@Override
 	public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+		setChanged();
+		notifyObservers(outToClient);
+		
 		String command = null;
 		BufferedReader in = new BufferedReader(new InputStreamReader(inFromClient));
 		

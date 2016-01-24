@@ -12,7 +12,6 @@ public interface Model {
 	void solveMaze(String mazeName, String Solver) throws Exception;
 	void saveCompressedMaze(String mazeName, String fileName) throws Exception;
 	void loadDecompressedMaze(String fileName, String mazeName) throws Exception;
-	File[] getFileDirectoryList(File f);
 	Maze3d getMaze3d(String mazeName) throws Exception;
 	int[][] getCrossSection(String mazeName, String dimension, int value) throws Exception;
 	Solution<Position> getSolution(String mazeName) throws Exception;

@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class Properties implements Serializable {
 	private int threadPoolSize;
 	private String searchingAlogrithm;
-	//private String viewType;
+	private int port;
+	private int numOfClients;
 	
 	public Properties() {
 		this.threadPoolSize = 10;
 		this.searchingAlogrithm = "bfs";
-		//this.viewType = "MazeWindow";
+		this.port = 5400;
+		this.numOfClients = 10;
 	}
 	
 	public Properties(int size, String solver) {
@@ -34,15 +36,23 @@ public class Properties implements Serializable {
 		this.searchingAlogrithm = searchingAlogrithm;
 	}
 
-	/*
-	 * public String getViewType() {
-		return viewType;
+	public int getPort() {
+		return port;
 	}
 
-	public void setViewType(String viewType) {
-		this.viewType = viewType;
+	public void setPort(int port) {
+		this.port = port;
 	}
-	 */
+
+	public int getNumOfClients() {
+		return numOfClients;
+	}
+
+	public void setNumOfClients(int numOfClients) {
+		this.numOfClients = numOfClients;
+	}
+
+
 	
 	
 }
