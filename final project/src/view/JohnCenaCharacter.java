@@ -9,10 +9,20 @@ import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Position;
 
+/**
+ * 
+ * @author naimay
+ *
+ */
 public class JohnCenaCharacter extends CommonCharacter {
 	
 	Image character;
 	
+	/**
+	 * 
+	 * @param parent
+	 * @param start
+	 */
 	public JohnCenaCharacter(Shell parent, Position start) {
 		super(parent, start);
 		try {
@@ -22,6 +32,9 @@ public class JohnCenaCharacter extends CommonCharacter {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void draw(PaintEvent e, int x, int y, int width, int height) {
 		e.gc.drawImage(character, 0, 0, character.getBounds().width, character.getBounds().height, x, y, width, height);

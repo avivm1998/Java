@@ -17,6 +17,12 @@ import org.eclipse.swt.widgets.Composite;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.State;
 
+/**
+ * Maze2D is a 2D maze displayer class.
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public class Maze2D extends MazeDisplayer{
 	
 
@@ -28,6 +34,13 @@ public class Maze2D extends MazeDisplayer{
 	 public Image winScreen;
 	 public Image solutionPath;
 	 
+	 /**
+	  * Constructor with parameters.
+	  * 
+	  * @param parent [IN] 
+	  * @param style  [IN]
+	  * @param player [IN]
+	  */
 	 public Maze2D(Composite parent,int style, CommonCharacter player){
 	        super(parent, style);
 	    	
@@ -122,7 +135,6 @@ public class Maze2D extends MazeDisplayer{
 			});
 	 }
 
-
 	@Override
 	public void setCharacterPosition(int row, int col) {
 		player.position.setY(row);
@@ -130,6 +142,12 @@ public class Maze2D extends MazeDisplayer{
 		moveCharacter(row, col);
 	}
 
+	/**
+	 * Moves the character to a new position.
+	 * 
+	 * @param row
+	 * @param col
+	 */
 	private void moveCharacter(int row,int col){
 		if(row >= 0 && row < mazeData[0].length && col >= 0 && col < mazeData.length && mazeData[col][row] != 1){
 			player.position.setY(row);

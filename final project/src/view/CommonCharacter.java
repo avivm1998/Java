@@ -5,6 +5,11 @@ import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Position;
 
+/**
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public abstract class CommonCharacter {
 	
 	Position position;

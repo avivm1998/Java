@@ -16,7 +16,6 @@ import algorithms.search.Solution;
  */
 public class CLI extends MyView {
 	
-
 	@Override
 	public void display(String args) {
 		System.out.println(args);
@@ -27,7 +26,7 @@ public class CLI extends MyView {
 	public void display(Maze3d maze) {
 		System.out.println(maze.toString());
 	}
-
+	
 	@Override
 	public void display(Solution<Position> sol) {
 		System.out.println(sol.toString());

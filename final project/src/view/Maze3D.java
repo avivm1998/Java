@@ -8,6 +8,12 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * 
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public class Maze3D extends MazeDisplayer {
 
 	public int characterX=4;
@@ -33,6 +39,11 @@ public class Maze3D extends MazeDisplayer {
         e.gc.fillPolygon(r);
 		
 	}
+	/**
+	 * 
+	 * @param parent
+	 * @param style
+	 */
 	public Maze3D(Composite parent, int style) {
 		super(parent, style);
 		
@@ -100,6 +111,11 @@ public class Maze3D extends MazeDisplayer {
 		});
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void moveCharacter(int x,int y){
 		if(x>=0 && x<mazeData[0].length && y>=0 && y<mazeData.length && mazeData[y][x]==0){
 			characterX=x;
@@ -114,9 +130,7 @@ public class Maze3D extends MazeDisplayer {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see view.MazeDisplayer#moveUp()
-	 */
+	
 	@Override
 	public void moveUp() {
 		int x=characterX;
@@ -124,9 +138,7 @@ public class Maze3D extends MazeDisplayer {
 		y=y-1;
 		moveCharacter(x, y);
 	}
-	/* (non-Javadoc)
-	 * @see view.MazeDisplayer#moveDown()
-	 */
+	
 	@Override
 	public void moveDown() {
 		int x=characterX;
@@ -134,9 +146,7 @@ public class Maze3D extends MazeDisplayer {
 		y=y+1;
 		moveCharacter(x, y);
 	}
-	/* (non-Javadoc)
-	 * @see view.MazeDisplayer#moveLeft()
-	 */
+	
 	@Override
 	public void moveLeft() {
 		int x=characterX;
@@ -144,9 +154,7 @@ public class Maze3D extends MazeDisplayer {
 		x=x-1;
 		moveCharacter(x, y);
 	}
-	/* (non-Javadoc)
-	 * @see view.MazeDisplayer#moveRight()
-	 */
+	
 	@Override
 	public void moveRight() {
 		int x=characterX;

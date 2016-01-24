@@ -26,6 +26,12 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import presenter.Properties;
 
+/**
+ * MazeWindow is the class that is in charge of our main window.
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public class MazeWindow extends BasicWindow implements View {
 	String fileName;
 	MazeDisplayer mazeDisplayer;
@@ -33,6 +39,13 @@ public class MazeWindow extends BasicWindow implements View {
 	String mazeName;
 	Properties settings;
 	
+	/**
+	 * Constructor with parameters.
+	 * 
+	 * @param title  [IN] the window's title.
+	 * @param width  [IN] the window's width.
+	 * @param height [IN] the window's height.
+	 */
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
 	}
