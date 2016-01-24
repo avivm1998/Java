@@ -14,9 +14,4 @@ public abstract class MyView extends Observable implements View {
 
 	public abstract void getUserCommand();
 	
-	@Override
-	public void notifyObservers() {
-		super.notifyObservers();
-	}
-	
 }

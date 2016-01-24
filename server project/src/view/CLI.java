@@ -16,6 +16,7 @@ import algorithms.search.Solution;
  */
 public class CLI extends MyView {
 	
+	private MyServer server;
 
 	@Override
 	public void display(String args) {
@@ -36,7 +37,8 @@ public class CLI extends MyView {
 	
 	@Override
 	public void getUserCommand() {
-		String command = null;
+		/*
+		 * String command = null;
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
@@ -45,6 +47,14 @@ public class CLI extends MyView {
 				this.notifyObservers(command);
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 */
+		
+		try {
+			server.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

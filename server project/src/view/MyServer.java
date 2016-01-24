@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,49 +9,52 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class MyServer {
+import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
+
+public class MyServer implements View {
 
 	int port;
 	ServerSocket server;
-	
-	HashMap<String, ClientHandler> clinetHandlerPool;
+	ClientHandler handler;
 	int numOfClients;
 	ExecutorService threadPool;
 	
 	volatile boolean stop;
 	
-	Thread mainServerThread;
+	Thread mainServerThread; 
 	
 	int clientsHandled = 0;
 	
-	public MyServer(int port,HashMap<String, ClientHandler> clinetHandlerPool,int numOfClients) {
+	public MyServer(int port, ClientHandler ch ,int numOfClients) {
 		this.port = port;
-		this.clinetHandlerPool = clinetHandlerPool;
+		this.handler = ch;
 		this.numOfClients = numOfClients;
 	}
 	
 	
 	public void start() throws Exception{
-		server=new ServerSocket(port);
+		server = new ServerSocket(port);
 		server.setSoTimeout(10 * 1000);
 		threadPool=Executors.newFixedThreadPool(numOfClients);
 		
-		mainServerThread=new Thread(new Runnable() {			
+		mainServerThread = new Thread(new Runnable() {			
 			@Override
 			public void run() {
 				while(!stop){
 					try {
-						final Socket someClient=server.accept();
+						final Socket someClient = server.accept();
 						if(someClient != null){
 							threadPool.execute(new Runnable() {									
 								@Override
 								public void run() {
 									try{										
 										clientsHandled++;
-										System.out.println("\thandling client "+clientsHandled);
-										//clinetHandlerPool.get(key).handleClient(someClient.getInputStream(), someClient.getOutputStream());
+										System.out.println("\thandling client " + clientsHandled);
+										handler.handleClient(someClient.getInputStream(), someClient.getOutputStream());
 										someClient.close();
-										System.out.println("\tdone handling client "+clientsHandled);										
+										System.out.println("\tdone handling client " + clientsHandled);										
 									}catch(IOException e){
 										e.printStackTrace();
 									}									
@@ -90,5 +93,37 @@ public class MyServer {
 		
 		server.close();
 		System.out.println("server is safely closed");
+	}
+
+
+	@Override
+	public void display(String args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void display(Maze3d maze) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void display(Solution<Position> sol) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getUserCommand() {
+		try {
+			this.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
