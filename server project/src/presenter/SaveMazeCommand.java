@@ -32,7 +32,7 @@ public class SaveMazeCommand implements Command {
 		String[] parameters = args.split(" ");
 		
 		try {
-			m.saveCompressedMaze(parameters[0], parameters[1]);
+			m.saveCompressedMaze(parameters[0], parameters[1], parameters[2]);
 		} catch(Exception e) {
 			throw e;
 		}

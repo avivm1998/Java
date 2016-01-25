@@ -10,17 +10,21 @@ import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import model.Model;
+import view.ClientHandler;
 import view.View;
 
 public class Presenter implements Observer {
 	private HashMap<String, Command> commandPool;
 	private Model m;
 	private View v;
-	private OutputStream out;
+	private HashMap<String,OutputStream> clients;
+	private int clientCounter = 0;
+	private Integer currentClient;
 	
 	public Presenter(Model m, View v) {
 		this.m = m;
 		this.initCommandPool();
+		this.clients = new HashMap<String, OutputStream>();
 	}
 	
 	public void initCommandPool() {
@@ -43,15 +47,19 @@ public class Presenter implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if(arg0 instanceof View) {
+		if(arg0 instanceof ClientHandler) {
 			if(arg1 instanceof Properties) {
 				m.setProperties((Properties)arg1);
+			}
+			if(arg1 instanceof OutputStream) {
+				clients.put("" + clientCounter, (OutputStream)arg1);
+				clientCounter++;
 			}
 			else
 				try {
 						String[] parameters = ((String)arg1).split(" ");
-					
-						switch(parameters[0]) {
+						
+						switch(parameters[1]) {
 							case "exit":
 								commandPool.get("exit").doCommand(null);
 								return;
@@ -107,16 +115,16 @@ public class Presenter implements Observer {
 		}
 		
 		if(arg0 instanceof Model) {
-			if(arg1 instanceof OutputStream) 
-				out = (OutputStream)arg1;
+			if(arg1 instanceof Integer)
+				currentClient = (Integer)arg1;
 			if(arg1 instanceof Maze3d)
-				v.sendMazeToClient((Maze3d) arg1, out);
+				v.sendMazeToClient((Maze3d) arg1, clients.get("" + currentClient));
 			else if(arg1 instanceof Solution) 
-				v.sendSolutionToClient((Solution<Position>)arg1, out);
+				v.sendSolutionToClient((Solution<Position>)arg1, clients.get("" + currentClient));
 			else if(arg1 instanceof String)
-				v.sendStringToClient((String)arg1, out);
+				v.sendStringToClient((String)arg1, clients.get("" + currentClient));
 			else
-				v.sendStringToClient("Something went wrong!", out);
+				v.sendStringToClient("Something went wrong!", clients.get("" + currentClient));
 		}
 	}
 

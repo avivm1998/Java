@@ -154,7 +154,7 @@ public class MyModel extends Observable implements Model{
 	}
 
 	@Override
-	public void generateMaze3d(String name, int x, int y, int z) throws Exception {
+	public void generateMaze3d(String client, String name, int x, int y, int z) throws Exception {
 		if(mazePool.get(name) != null)
 			throw new Exception("Can not override " + name);
 		
@@ -168,6 +168,8 @@ public class MyModel extends Observable implements Model{
 				Maze3d maze = mg.generate(x, y, z);
 				mazePool.put(name, maze);
 				setChanged();
+				notifyObservers(new Integer(client));
+				setChanged();
 				notifyObservers(maze);
 				return maze;
 			}
@@ -180,7 +182,7 @@ public class MyModel extends Observable implements Model{
 		if(mazePool.get(mazeName) == null)
 			throw new Exception("There is no maze named " + mazeName);
 		Maze3d maze = mazePool.get(mazeName);
-		
+		this.setChanged();
 		this.notifyObservers();
 		
 		switch(dimension) {
@@ -197,7 +199,7 @@ public class MyModel extends Observable implements Model{
 	}
 
 	@Override
-	public void saveCompressedMaze(String mazeName, String fileName) throws Exception {
+	public void saveCompressedMaze(String client, String mazeName, String fileName) throws Exception {
 		if(mazePool.get(mazeName) == null) 
 			throw new Exception("There is not maze named" + mazeName);
 		
@@ -225,7 +227,7 @@ public class MyModel extends Observable implements Model{
 	}
 
 	@Override
-	public void loadDecompressedMaze(String fileName, String mazeName) throws Exception {
+	public void loadDecompressedMaze(String client, String fileName, String mazeName) throws Exception {
 		File f = new File(fileName);
 		FileInputStream fin = null;
 		InputStream in = null;
@@ -278,12 +280,14 @@ public class MyModel extends Observable implements Model{
 			}
 		});
 		this.setChanged();
+		this.notifyObservers(new Integer(client));
+		this.setChanged();
 		this.notifyObservers(mazePool.get(mazeName));
 	}
 	
 
 	@Override
-	public void solveMaze(String mazeName, String generator) throws Exception{
+	public void solveMaze(String client, String mazeName, String generator) throws Exception{
 		if(mazePool.get(mazeName) == null)
 			throw new Exception("There is no maze named " + mazeName);
 		
@@ -317,6 +321,8 @@ public class MyModel extends Observable implements Model{
 				Solution<Position> sol = cs.search(s);
 				solutionPool.put(mazeName, sol);
 				cache.put(s.getMaze(), sol);
+				setChanged();
+				notifyObservers(new Integer(client));
 				setChanged();
 				notifyObservers(sol);
 				return sol;

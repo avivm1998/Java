@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -23,10 +24,12 @@ public class MyServer implements View {
 	volatile boolean stop;
 	Thread mainServerThread; 
 	int clientsHandled = 0;
+	HashMap<String, OutputStream> clients;
 	
 	public MyServer(Properties settings) {
 		this.settings = settings;
 		this.handler = new MyClientHandler();
+		clients = new HashMap<String, OutputStream>();
 	}
 	
 	
@@ -43,6 +46,7 @@ public class MyServer implements View {
 				while(!stop){
 					try {
 						final Socket someClient = server.accept();
+						clients.put("" + clientsHandled, someClient.getOutputStream());
 						if(someClient != null){
 							threadPool.execute(new Runnable() {									
 								@Override
@@ -50,7 +54,7 @@ public class MyServer implements View {
 									try{										
 										clientsHandled++;
 										System.out.println("\thandling client " + clientsHandled);
-										handler.handleClient(someClient.getInputStream(), someClient.getOutputStream());
+										handler.handleClient(someClient.getInputStream(), someClient.getOutputStream(), "" + clientsHandled);
 										someClient.close();
 										System.out.println("\tdone handling client " + clientsHandled);										
 									}catch(IOException e){
@@ -115,6 +119,7 @@ public class MyServer implements View {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(outToServer);
 			out.writeObject(maze);
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -124,6 +129,7 @@ public class MyServer implements View {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(outToServer);
 			out.writeObject(solution);
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,6 +139,7 @@ public class MyServer implements View {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(outToServer);
 			out.writeObject(arg);
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

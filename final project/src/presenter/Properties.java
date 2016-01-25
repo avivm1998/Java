@@ -11,8 +11,8 @@ public class Properties implements Serializable {
 	public Properties() {
 		this.threadPoolSize = 10;
 		this.searchingAlogrithm = "bfs";
-		this.port = 5400;
-		this.ip = "localhost";
+		this.port = 2000;
+		this.ip = "127.0.0.1";
 	}
 	
 	public Properties(int size, String solver, int port, String ip) {

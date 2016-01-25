@@ -29,7 +29,7 @@ public class SolveMazeCommand implements Command {
 	@Override
 	public void doCommand(String args) throws Exception {
 		String[] parameters = args.split(" ");
-		m.solveMaze(parameters[0], parameters[1]);
+		m.solveMaze(parameters[0], parameters[1], parameters[2]);
 	}
 
 }

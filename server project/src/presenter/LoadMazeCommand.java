@@ -31,7 +31,7 @@ public class LoadMazeCommand implements Command {
 		String[] parameters = args.split(" ");
 		
 		try {
-			m.loadDecompressedMaze(parameters[0], parameters[1]);
+			m.loadDecompressedMaze(parameters[0], parameters[1], parameters[2]);
 		} catch(Exception e) {
 			throw e;
 		}

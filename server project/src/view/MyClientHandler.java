@@ -10,7 +10,7 @@ import java.util.Observable;
 public class MyClientHandler extends Observable implements ClientHandler {
 
 	@Override
-	public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+	public void handleClient(InputStream inFromClient, OutputStream outToClient, String clientID) {
 		setChanged();
 		notifyObservers(outToClient);
 		
@@ -20,7 +20,7 @@ public class MyClientHandler extends Observable implements ClientHandler {
 		try {
 			while(!(command = in.readLine()).equals("exit")) {
 				setChanged();
-				notifyObservers(command);
+				notifyObservers(clientID + " " + command);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

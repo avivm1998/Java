@@ -11,13 +11,15 @@ public class Properties implements Serializable {
 	public Properties() {
 		this.threadPoolSize = 10;
 		this.searchingAlogrithm = "bfs";
-		this.port = 5400;
+		this.port = 2000;
 		this.numOfClients = 10;
 	}
 	
-	public Properties(int size, String solver) {
+	public Properties(int size, String solver, int port, int numOfClients) {
 		this.threadPoolSize = size;
 		this.searchingAlogrithm = solver;
+		this.port = port;
+		this.numOfClients = numOfClients;
 	}
 
 	public int getThreadPoolSize() {
