@@ -23,6 +23,7 @@ public class XMLMaker {
 		Properties settings = new Properties();
 		settings.setThreadPoolSize(10);
 		settings.setSearchingAlogrithm("bfs");
+		settings.setCharacter(1);
 
 		FileOutputStream fos = new FileOutputStream("Properties.xml");
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -35,6 +36,7 @@ public class XMLMaker {
 		properties = (Properties)decoder.readObject();
 		System.out.println(properties.getThreadPoolSize());
 		System.out.println(properties.getSearchingAlogrithm());
+		System.out.println(properties.getCharacter());
 		decoder.close();
 
 	}

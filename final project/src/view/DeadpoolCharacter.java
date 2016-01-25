@@ -10,13 +10,13 @@ import org.eclipse.swt.widgets.Shell;
 import algorithms.mazeGenerators.Position;
 
 /**
- * JohnCenaCharacter is the class that represents our John Cena character.
+ * DeadpoolCharacter is the class that represents our Deadpool character.
  * 
  * @author Aviv Moran & Ayal Naim
  *
  */
-public class JohnCenaCharacter extends CommonCharacter {
-	
+public class DeadpoolCharacter extends CommonCharacter {
+
 	Image character;
 	
 	/**
@@ -25,10 +25,10 @@ public class JohnCenaCharacter extends CommonCharacter {
 	 * @param parent [IN] the shell.
 	 * @param start  [IN] the start position.
 	 */
-	public JohnCenaCharacter(Shell parent, Position start) {
+	public DeadpoolCharacter(Shell parent, Position start) {
 		super(parent, start);
 		try {
-			character = new Image(parent.getDisplay(), new FileInputStream("resources/john_cena.jpg"));
+			character = new Image(parent.getDisplay(), new FileInputStream("resources/Deadpool.jpg"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -39,5 +39,6 @@ public class JohnCenaCharacter extends CommonCharacter {
 		e.gc.drawImage(character, 0, 0, character.getBounds().width, character.getBounds().height, x, y, width, height);
 
 	}
+
 
 }

@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -41,17 +43,28 @@ public class Maze2D extends MazeDisplayer{
 	  * @param style  [IN]
 	  * @param player [IN]
 	  */
-	 public Maze2D(Composite parent,int style, CommonCharacter player){
+	 public Maze2D(Composite parent,int style, CommonCharacter player, int theme){
 	        super(parent, style);
 	    	
 	        try {
-				walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
-				floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
-				floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
-				upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
-				goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
-				winScreen = new Image(this.getDisplay(), new FileInputStream("resources/win_screen.png"));
-				solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/solution_path.jpg"));
+	        	if(theme == 1) {
+	        		walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
+	        		floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
+	        		floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
+	        		upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
+	        		goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
+	        		winScreen = new Image(this.getDisplay(), new FileInputStream("resources/win_screen.png"));
+	        		solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/solution_path.jpg"));
+	        	}
+	        	else {
+	        		walls = new Image(this.getDisplay(), new FileInputStream("resources/Deadpool_walls.jpg"));
+	        		floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
+	        		floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
+	        		upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
+	        		goal = new Image(this.getDisplay(), new FileInputStream("resources/chimichanga.jpg"));
+	        		winScreen = new Image(this.getDisplay(), new FileInputStream("resources/Deadpool_win_screen.jpg"));
+	        		solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/two_guns.gif"));
+	        	}
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -131,6 +144,32 @@ public class Maze2D extends MazeDisplayer{
 							redraw();
 						}
 					}
+				}
+			});
+	    	addMouseWheelListener(new MouseWheelListener() {
+				
+				@Override
+				public void mouseScrolled(MouseEvent arg0) {
+					if((arg0.stateMask & SWT.CONTROL) == SWT.CONTROL)
+					{
+						if(arg0.count > 0){
+	                        int width = getSize().x;
+	                        int height = getSize().y;
+
+	                        setSize((int)(width * 1.05), (int)(height * 1.05));
+
+
+	                    }
+	                    else {
+
+	                        int width = getSize().x;
+	                        int height = getSize().y;
+
+	                        setSize((int)(width * 0.95), (int)(height * 0.95));
+
+	                        }
+					}
+					
 				}
 			});
 	 }

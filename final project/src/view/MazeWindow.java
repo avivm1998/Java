@@ -1,9 +1,12 @@
 package view;
 
 import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
@@ -13,6 +16,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -38,6 +42,7 @@ public class MazeWindow extends BasicWindow implements View {
 	Position player;
 	String mazeName;
 	Properties settings;
+	int character_pickt;
 	
 	/**
 	 * Constructor with parameters.
@@ -147,6 +152,14 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				Random rand = new Random();
+				mazeDisplayer.player.setPosition(mazeDisplayer.solution.getSolution().get(rand.nextInt(mazeDisplayer.solution.getSolution().size())).getState());
+				getDisplay().syncExec(new Runnable() { 
+					@Override
+					public void run() {
+						mazeDisplayer.redraw();
+					}
+				});
 				mazeDisplayer.showSolution = true;
 				getDisplay().syncExec(new Runnable() {
 					@Override
@@ -316,17 +329,109 @@ public class MazeWindow extends BasicWindow implements View {
 					XMLDecoder in = new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
 					settings = (Properties)in.readObject();
 					in.close();
+					character_pickt = settings.getCharacter();
 					setChanged();
 					notifyObservers(settings);
 				
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				
 				}
+				
+				saveFile.setEnabled(true);
+				loadFile.setEnabled(true);
+				solve.setEnabled(true);
+				hint.setEnabled(true);
+				generate.setEnabled(true);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});
+		
+		MenuItem propertiesInput = new MenuItem(fileMenu, SWT.PUSH);
+		propertiesInput.setText("Enter Properties");
+		propertiesInput.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
+				Shell properties = new Shell(getDisplay());
+				properties.setSize(400, 190);
+				properties.setLayout(new GridLayout(2,false));
+				
+				Label fileName = new Label(properties, SWT.BORDER);
+				fileName.setText("Wanted properties file name with \".xml\" ending: ");
+				fileName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text fileNameIn = new Text(properties, SWT.BORDER);
+				fileNameIn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				fileNameIn.setText("");
+				
+				Label treadPoolSize = new Label(properties, SWT.BORDER);
+				treadPoolSize.setText("Wanted tread pool size: ");
+				treadPoolSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text size = new Text(properties, SWT.BORDER);
+				size.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				size.setText("");
+				
+				Label searchAlgo = new Label(properties, SWT.BORDER);
+				searchAlgo.setText("Wanted search algorithm: ");
+				searchAlgo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Combo theSearchAlgo = new Combo(properties, SWT.BORDER);
+				theSearchAlgo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				String searchers[] = {"bfs","astar md","astar ad"};
+				theSearchAlgo.setItems(searchers);
+				
+				Label theme = new Label(properties, SWT.BORDER);
+				theme.setText("Pick a character: ");
+				theme.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Combo themeDis = new Combo(properties, SWT.BORDER);
+				themeDis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				String characters[] = {"John Cena!","Deadpool!"};
+				themeDis.setItems(characters);
+				
+				Button setingsCtor = new Button(properties, SWT.BORDER);
+				setingsCtor.setText("Create your setings!");
+				setingsCtor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+				setingsCtor.addSelectionListener(new SelectionListener() {
+					
+					@Override
+					public void widgetSelected(SelectionEvent arg0) {
+						int themeNumber;
+						if(themeDis.getText().equals("John Cena!"))
+							themeNumber = 1;
+						else
+							themeNumber = 2;
+						settings = new Properties(Integer.valueOf(size.getText()), theSearchAlgo.getText(), themeNumber);
+						character_pickt = settings.getCharacter();
+
+						FileOutputStream fos;
+						try {
+							fos = new FileOutputStream("resources/" + fileNameIn.getText());
+							BufferedOutputStream bos = new BufferedOutputStream(fos);
+							XMLEncoder xmlEncoder = new XMLEncoder(bos);
+							xmlEncoder.writeObject(settings);
+							xmlEncoder.close();
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
+						setChanged();
+						notifyObservers(settings);
+						properties.dispose();
+					}
+					
+					@Override
+					public void widgetDefaultSelected(SelectionEvent arg0) {}
+				});
+				
+				properties.open();
 				
 				saveFile.setEnabled(true);
 				loadFile.setEnabled(true);
@@ -358,7 +463,6 @@ public class MazeWindow extends BasicWindow implements View {
 		
 		shell.setMenuBar(menuBar);
 		
-		
 	}
 	
 	@Override
@@ -379,7 +483,10 @@ public class MazeWindow extends BasicWindow implements View {
 			@Override
 			public void run() {
 				if(mazeDisplayer == null) {
-					mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new JohnCenaCharacter(shell, maze.getEntrance()));
+					if(character_pickt == 2)
+						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new DeadpoolCharacter(shell, maze.getEntrance()), character_pickt);
+					else
+						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new JohnCenaCharacter(shell, maze.getEntrance()), character_pickt);
 					mazeDisplayer.maze = maze;
 					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
