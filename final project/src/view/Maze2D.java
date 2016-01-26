@@ -47,16 +47,7 @@ public class Maze2D extends MazeDisplayer{
 	        super(parent, style);
 	    	
 	        try {
-	        	if(theme == 1) {
-	        		walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
-	        		floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
-	        		floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
-	        		upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
-	        		goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
-	        		winScreen = new Image(this.getDisplay(), new FileInputStream("resources/win_screen.png"));
-	        		solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/solution_path.jpg"));
-	        	}
-	        	else {
+	        	if(theme == 2) {
 	        		walls = new Image(this.getDisplay(), new FileInputStream("resources/Deadpool_walls.jpg"));
 	        		floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
 	        		floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
@@ -64,6 +55,15 @@ public class Maze2D extends MazeDisplayer{
 	        		goal = new Image(this.getDisplay(), new FileInputStream("resources/chimichanga.jpg"));
 	        		winScreen = new Image(this.getDisplay(), new FileInputStream("resources/Deadpool_win_screen.jpg"));
 	        		solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/two_guns.gif"));
+	        	}
+	        	else {
+	        		walls = new Image(this.getDisplay(), new FileInputStream("resources/wwe.jpg"));
+	        		floorDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/down_arrow.png"));
+	        		floorUpPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_arrow.png"));
+	        		upAndDownPassage = new Image(this.getDisplay(), new FileInputStream("resources/up_down_arrow.png"));
+	        		goal = new Image(this.getDisplay(), new FileInputStream("resources/championship_belt.png"));
+	        		winScreen = new Image(this.getDisplay(), new FileInputStream("resources/win_screen.png"));
+	        		solutionPath = new Image(this.getDisplay(), new FileInputStream("resources/solution_path.jpg"));
 	        	}
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block

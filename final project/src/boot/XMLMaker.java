@@ -23,9 +23,11 @@ public class XMLMaker {
 		Properties settings = new Properties();
 		settings.setThreadPoolSize(10);
 		settings.setSearchingAlogrithm("bfs");
-		settings.setCharacter(1);
+		settings.setCharacter(2);
+		settings.setPort(2000);
+		settings.setIp("127.0.0.1");
 
-		FileOutputStream fos = new FileOutputStream("Properties.xml");
+		FileOutputStream fos = new FileOutputStream("DefulteDeadpoolProperties.xml");
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
 		XMLEncoder xmlEncoder = new XMLEncoder(bos);
 		xmlEncoder.writeObject(settings);

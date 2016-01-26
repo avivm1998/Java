@@ -356,7 +356,7 @@ public class MazeWindow extends BasicWindow implements View {
 			public void widgetSelected(SelectionEvent arg0) {
 				
 				Shell properties = new Shell(getDisplay());
-				properties.setSize(400, 190);
+				properties.setSize(400, 280);
 				properties.setLayout(new GridLayout(2,false));
 				
 				Label fileName = new Label(properties, SWT.BORDER);
@@ -393,6 +393,22 @@ public class MazeWindow extends BasicWindow implements View {
 				String characters[] = {"John Cena!","Deadpool!"};
 				themeDis.setItems(characters);
 				
+				Label portLabel = new Label(properties, SWT.BORDER);
+				portLabel.setText("Wanted port: ");
+				portLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text port = new Text(properties, SWT.BORDER);
+				port.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				port.setText("");
+				
+				Label ipLabel = new Label(properties, SWT.BORDER);
+				ipLabel.setText("Wanted IP: ");
+				ipLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				
+				Text ip = new Text(properties, SWT.BORDER);
+				ip.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,1));
+				ip.setText("");
+				
 				Button setingsCtor = new Button(properties, SWT.BORDER);
 				setingsCtor.setText("Create your setings!");
 				setingsCtor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -405,7 +421,7 @@ public class MazeWindow extends BasicWindow implements View {
 							themeNumber = 1;
 						else
 							themeNumber = 2;
-						settings = new Properties(Integer.valueOf(size.getText()), theSearchAlgo.getText(), themeNumber, settings.getPort(), settings.getIp());
+						settings = new Properties(Integer.valueOf(size.getText()), theSearchAlgo.getText(), themeNumber, new Integer(port.getText()), ip.getText());
 						character_pickt = settings.getCharacter();
 
 						FileOutputStream fos;

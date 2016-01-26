@@ -41,13 +41,6 @@ public class Properties implements Serializable {
 		this.ip = ip;
 	}
 	
-	public Properties(int size, String solver, int port, String ip) {
-		this.threadPoolSize = size;
-		this.searchingAlogrithm = solver;
-		this.port = port;
-		this.ip = ip;
-	}
-
 	/**
 	 * Returns the size of the threadpool.
 	 * 
