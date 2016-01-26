@@ -54,6 +54,8 @@ public class MyModel extends Observable implements Model{
 	 */
 	@SuppressWarnings("unchecked")
 	public MyModel() {
+		settings = new Properties();
+		setProperties(settings);
 		mazePool = new HashMap<String, Maze3d>();
 		solutionPool = new HashMap<String, Solution<Position>>();
 		cache = new HashMap<Maze3d, Solution<Position>>();
@@ -175,6 +177,20 @@ public class MyModel extends Observable implements Model{
 			}
 		});
 		
+		/*
+		 * threadPool.execute(new Runnable() {
+			@Override
+			public void run() {
+				Maze3dGenerator mg = new MyMaze3dGenerator2();
+				Maze3d maze = mg.generate(x, y, z);
+				mazePool.put(name, maze);
+				setChanged();
+				notifyObservers(new Integer(client));
+				setChanged();
+				notifyObservers(maze);
+			}
+		});
+		 */
 	}
 
 	@Override
@@ -276,13 +292,14 @@ public class MyModel extends Observable implements Model{
 			public Maze3d call() throws Exception {
 				Maze3d maze = new Maze3d(decompressedMaze);
 				mazePool.put(mazeName, maze);
+				setChanged();
+				notifyObservers(new Integer(client));
+				setChanged();
+				notifyObservers(mazePool.get(mazeName));
 				return maze;
 			}
 		});
-		this.setChanged();
-		this.notifyObservers(new Integer(client));
-		this.setChanged();
-		this.notifyObservers(mazePool.get(mazeName));
+		
 	}
 	
 

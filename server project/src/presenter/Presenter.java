@@ -23,6 +23,7 @@ public class Presenter implements Observer {
 	
 	public Presenter(Model m, View v) {
 		this.m = m;
+		this.v = v;
 		this.initCommandPool();
 		this.clients = new HashMap<String, OutputStream>();
 	}
@@ -51,9 +52,9 @@ public class Presenter implements Observer {
 			if(arg1 instanceof Properties) {
 				m.setProperties((Properties)arg1);
 			}
-			if(arg1 instanceof OutputStream) {
-				clients.put("" + clientCounter, (OutputStream)arg1);
+			else if(arg1 instanceof OutputStream) {
 				clientCounter++;
+				clients.put("" + clientCounter, (OutputStream)arg1);
 			}
 			else
 				try {
@@ -64,43 +65,43 @@ public class Presenter implements Observer {
 								commandPool.get("exit").doCommand(null);
 								return;
 							case "dir":
-								commandPool.get("dir").doCommand(parameters[1]);
+								commandPool.get("dir").doCommand(parameters[2]);
 								break;
 							case "generate":
-								commandPool.get("generate").doCommand(parameters[3] + " " + parameters[4] + " " + parameters[5] + " " + parameters[6]);
+								commandPool.get("generate").doCommand(parameters[0] + " " + parameters[4] + " " + parameters[5] + " " + parameters[6] + " " + parameters[7]);
 								break;
 							case "save":
-								commandPool.get("save").doCommand(parameters[2] + " " + parameters[3]);
+								commandPool.get("save").doCommand(parameters[0] + " " + parameters[3] + " " + parameters[4]);
 								break;
 							case "load":
-								commandPool.get("load").doCommand(parameters[2] + " " + parameters[3]);
+								commandPool.get("load").doCommand(parameters[0] + " " + parameters[3] + " " + parameters[4]);
 								break;
 							case "maze":
-								commandPool.get("maze size").doCommand(parameters[2]);
+								commandPool.get("maze size").doCommand(parameters[3]);
 								break;
 							case "file":
-								commandPool.get("file size").doCommand(parameters[2]);
+								commandPool.get("file size").doCommand(parameters[3]);
 								break;
 							case "solve": 
-								commandPool.get("solve").doCommand(parameters[1] + " " + parameters[2]);
+								commandPool.get("solve").doCommand(parameters[0] + " " + parameters[2] + " " + parameters[3]);
 								break;
 							case "display":
 								switch (parameters[1]) {
 									case "cross":
-										if(parameters[4].equals("X"))
-											commandPool.get("display cross x").doCommand(parameters[5] + " " + parameters[7]);
+										if(parameters[5].equals("X"))
+											commandPool.get("display cross x").doCommand(parameters[6] + " " + parameters[8]);
 										else if(parameters[4].equals("Y"))
-											commandPool.get("display cross y").doCommand(parameters[5] + " " + parameters[7]);
+											commandPool.get("display cross y").doCommand(parameters[6] + " " + parameters[8]);
 										else
-											commandPool.get("display cross z").doCommand(parameters[5] + " " + parameters[7]);
+											commandPool.get("display cross z").doCommand(parameters[6] + " " + parameters[8]);
 										break;
 										
 									case "solution":
-										commandPool.get("solution").doCommand(parameters[2]);
+										commandPool.get("solution").doCommand(parameters[3]);
 										break;
 		
 									default:
-										commandPool.get("display").doCommand(parameters[1]);
+										commandPool.get("display").doCommand(parameters[2]);
 										break;
 								}
 								break;
@@ -108,16 +109,16 @@ public class Presenter implements Observer {
 								v.display("Invalid Command!");
 						}
 				} catch(IOException e) {
-					v.display(e.getMessage());
+					e.printStackTrace();
 				} catch(Exception e) {
-					v.display(e.getMessage());
+					e.printStackTrace();
 			}
 		}
 		
 		if(arg0 instanceof Model) {
 			if(arg1 instanceof Integer)
 				currentClient = (Integer)arg1;
-			if(arg1 instanceof Maze3d)
+			else if(arg1 instanceof Maze3d)
 				v.sendMazeToClient((Maze3d) arg1, clients.get("" + currentClient));
 			else if(arg1 instanceof Solution) 
 				v.sendSolutionToClient((Solution<Position>)arg1, clients.get("" + currentClient));

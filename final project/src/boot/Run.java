@@ -9,6 +9,7 @@ import view.MazeWindow;
 public class Run {
 
 	public static void main(String[] args) {
+		System.out.println("Client side");
 		MyModel m = new MyModel();
 		//CLI cli = new CLI();
 		MazeWindow v = new MazeWindow("John Cena", 1000, 500);

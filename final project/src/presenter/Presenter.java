@@ -25,34 +25,34 @@ public class Presenter implements Observer {
 				m.setProperties((Properties)arg1);
 			}
 			
-			String[] parameters = ((String)arg1).split(" ");
-			
-			try {
-				switch(parameters[1]) {
-					case "exit":
-						m.exit();
-						return;
-					case "generate":
-						m.generateMaze3d(parameters[3], Integer.parseInt(parameters[4]), Integer.parseInt(parameters[5]), Integer.parseInt(parameters[6]));
-						break;
-					case "save":
-						m.saveCompressedMaze(parameters[2], parameters[3]);
-						break;
-					case "load":
-						m.loadDecompressedMaze(parameters[2], parameters[3]);
-						break;
-					case "solve": 
-						m.solveMaze(parameters[1], parameters[2]);;
-						break;
-					default:
-						v.display("Invalid Command!");
+			else {
+				String[] parameters = ((String)arg1).split(" ");
+				
+				try {
+					switch(parameters[0]) {
+						case "exit":
+							m.exit();
+							return;
+						case "generate":
+							m.generateMaze3d(parameters[3], Integer.parseInt(parameters[4]), Integer.parseInt(parameters[5]), Integer.parseInt(parameters[6]));
+							break;
+						case "save":
+							m.saveCompressedMaze(parameters[2], parameters[3]);
+							break;
+						case "load":
+							m.loadDecompressedMaze(parameters[2], parameters[3]);
+							break;
+						case "solve": 
+							m.solveMaze(parameters[1], parameters[2]);;
+							break;
+						default:
+							v.display("Invalid Command!");
+					}
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		

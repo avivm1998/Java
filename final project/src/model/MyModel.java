@@ -1,8 +1,6 @@
 package model;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -69,8 +67,8 @@ public class MyModel extends Observable implements Model {
 		outToServer.println("save maze " + mazeName + " " + fileName);
 		outToServer.flush();
 		
-		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(theServer.getInputStream()));
-		String message = inFromServer.readLine();
+		ObjectInputStream inFromServer = new ObjectInputStream(theServer.getInputStream());
+		String message = (String)inFromServer.readObject();
 
 		setChanged();
 		notifyObservers(message);
@@ -84,6 +82,7 @@ public class MyModel extends Observable implements Model {
 		
 		ObjectInputStream inFromServer = new ObjectInputStream(theServer.getInputStream());
 		Maze3d maze = (Maze3d)inFromServer.readObject();
+		mazePool.put(mazeName, maze);
 		
 		setChanged();
 		notifyObservers(maze);

@@ -18,7 +18,7 @@ public class MyClientHandler extends Observable implements ClientHandler {
 		BufferedReader in = new BufferedReader(new InputStreamReader(inFromClient));
 		
 		try {
-			while(!(command = in.readLine()).equals("exit")) {
+			while((command = in.readLine()) != null) {
 				setChanged();
 				notifyObservers(clientID + " " + command);
 			}
