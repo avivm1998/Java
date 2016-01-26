@@ -12,7 +12,8 @@ public class Properties implements Serializable {
 	private int threadPoolSize;
 	private String searchingAlogrithm;
 	private int character;
-	//private String viewType;
+	private int port;
+	private String ip;
 	
 	/**
 	 * Default constructor ,sets the threadpool size to 10 and the searching alogrithm to "bfs".
@@ -21,7 +22,6 @@ public class Properties implements Serializable {
 		this.threadPoolSize = 10;
 		this.searchingAlogrithm = "bfs";
 		this.character = 1;
-		//this.viewType = "MazeWindow";
 	}
 	
 	/**
@@ -35,6 +35,15 @@ public class Properties implements Serializable {
 		this.threadPoolSize = size;
 		this.searchingAlogrithm = solver;
 		this.character = characterChoice;
+		this.port = 2000;
+		this.ip = "127.0.0.1";
+	}
+	
+	public Properties(int size, String solver, int port, String ip) {
+		this.threadPoolSize = size;
+		this.searchingAlogrithm = solver;
+		this.port = port;
+		this.ip = ip;
 	}
 
 	/**
@@ -89,7 +98,20 @@ public class Properties implements Serializable {
 	 */
 	public void setCharacter(int character) {
 		this.character = character;
+	public int getPort() {
+		return port;
 	}
-	
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 	
 }

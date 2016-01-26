@@ -4,13 +4,13 @@ import model.Model;
 import view.View;
 
 /**
- * LoadMazeCommand loads and decompresses the maze written in the given file the the given maze name.
- * When the maze is ready, the command will send a message to the user.
+ * SaveMazeCommand saves and compresses the given maze to the given file.
+ * When the file is ready, the command will send a message to the user.
  * 
  * @author Aviv Moran & Ayal Naim
  *
  */
-public class LoadMazeCommand implements Command {
+public class SaveMazeCommand implements Command {
 	
 	Model m;
 	View v;
@@ -21,17 +21,18 @@ public class LoadMazeCommand implements Command {
 	 * @param m [IN] The model facade {@link Model}.
 	 * @param v [IN] The view facade {@link View}.
 	 */
-	public LoadMazeCommand(Model m, View v) {
+	public SaveMazeCommand(Model m, View v) {
 		this.m = m;
 		this.v = v;
 		
 	}
+	
 	@Override
 	public void doCommand(String args) throws Exception {
 		String[] parameters = args.split(" ");
 		
 		try {
-			m.loadDecompressedMaze(parameters[0], parameters[1]);
+			m.saveCompressedMaze(parameters[0], parameters[1], parameters[2]);
 		} catch(Exception e) {
 			throw e;
 		}
