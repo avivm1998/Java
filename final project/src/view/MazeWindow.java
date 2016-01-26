@@ -405,7 +405,7 @@ public class MazeWindow extends BasicWindow implements View {
 							themeNumber = 1;
 						else
 							themeNumber = 2;
-						settings = new Properties(Integer.valueOf(size.getText()), theSearchAlgo.getText(), themeNumber);
+						settings = new Properties(Integer.valueOf(size.getText()), theSearchAlgo.getText(), themeNumber, settings.getPort(), settings.getIp());
 						character_pickt = settings.getCharacter();
 
 						FileOutputStream fos;
