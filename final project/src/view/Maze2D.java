@@ -21,6 +21,7 @@ import algorithms.search.State;
 
 /**
  * Maze2D is a 2D maze displayer class.
+ * It is in charge of most of the images and the movement.
  * 
  * @author Aviv Moran & Ayal Naim
  *

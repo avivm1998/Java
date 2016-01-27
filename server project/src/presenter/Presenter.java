@@ -13,6 +13,12 @@ import model.Model;
 import view.ClientHandler;
 import view.View;
 
+/**
+ * The presenter is in charge of connecting the view and the model using MVP. 
+ * 
+ * @author Aviv Mora & Ayal Naim
+ *
+ */
 public class Presenter implements Observer {
 	private HashMap<String, Command> commandPool;
 	private Model m;
@@ -21,6 +27,12 @@ public class Presenter implements Observer {
 	private int clientCounter = 0;
 	private Integer currentClient;
 	
+	/**
+	 * Constructor with parameters.
+	 * 
+	 * @param m [IN] the model
+	 * @param v [IN] the view
+	 */
 	public Presenter(Model m, View v) {
 		this.m = m;
 		this.v = v;
@@ -28,6 +40,9 @@ public class Presenter implements Observer {
 		this.clients = new HashMap<String, OutputStream>();
 	}
 	
+	/**
+	 * Puts all the commands in the command pool
+	 */
 	public void initCommandPool() {
 		commandPool = new HashMap<String, Command>();
 		commandPool.put("dir", new DirCommand(m, v));
@@ -129,10 +144,20 @@ public class Presenter implements Observer {
 		}
 	}
 
+	/**
+	 * Returns the command pool.
+	 * 
+	 * @return
+	 */
 	public HashMap<String, Command> getCommandPool() {
 		return commandPool;
 	}
 
+	/**
+	 * Sets the command pool.
+	 * 
+	 * @param commandPool
+	 */
 	public void setCommandPool(HashMap<String, Command> commandPool) {
 		this.commandPool = commandPool;
 	}

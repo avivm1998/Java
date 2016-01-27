@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import presenter.Properties;
 
 /**
- * XMLMaker is a class that is in charge of starting up an XML file named "Properties.xml" 
+ * XMLMaker is a class that is in charge of starting up and saving an XML file. 
  * 
  * @author Aviv Moran & Ayal Naim
  *

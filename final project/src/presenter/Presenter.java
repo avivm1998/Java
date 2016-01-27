@@ -9,10 +9,22 @@ import algorithms.search.Solution;
 import model.Model;
 import view.View;
 
+/**
+ * The presenter is in charge of connecting the view and the model using MVP. 
+ * 
+ * @author Aviv Mora & Ayal Naim
+ *
+ */
 public class Presenter implements Observer {
 	private Model m;
 	private View v;
 	
+	/**
+	 * Constructor with parameters.
+	 * 
+	 * @param m [IN] the model
+	 * @param v [IN] the view
+	 */
 	public Presenter(Model m, View v) {
 		this.m = m;
 		this.v = v;

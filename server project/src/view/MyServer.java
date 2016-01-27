@@ -26,6 +26,11 @@ public class MyServer implements View {
 	int clientsHandled = 0;
 	HashMap<String, OutputStream> clients;
 	
+	/**
+	 * Constructer with parameters
+	 * 
+	 * @param settings [IN] the program's properties. 
+	 */
 	public MyServer(Properties settings) {
 		this.settings = settings;
 		this.handler = new MyClientHandler();
@@ -36,7 +41,7 @@ public class MyServer implements View {
 	public void start() throws Exception{
 		server = new ServerSocket(settings.getPort());
 		server.setSoTimeout(10 * 1000);
-		threadPool=Executors.newFixedThreadPool(settings.getNumOfClients());
+		threadPool=Executors.newFixedThreadPool(settings.getThreadPoolSize());
 		
 		System.out.println("Server is alive and waiting for clients to connect! ");
 		
@@ -79,6 +84,11 @@ public class MyServer implements View {
 		
 	}
 	
+	/**
+	 * An organized exit
+	 * 
+	 * @throws Exception
+	 */
 	public void close() throws Exception{
 		stop=true;	
 		// do not execute jobs in queue, continue to execute running threads

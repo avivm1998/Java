@@ -16,7 +16,7 @@ public class Properties implements Serializable {
 	private String ip;
 	
 	/**
-	 * Default constructor ,sets the threadpool size to 10 and the searching alogrithm to "bfs".
+	 * Default constructor ,sets the threadpool size to 10, the searching alogrithm to "bfs" ,the character John Cena, the port 2000 and the IP 127.0.0.1.
 	 */
 	public Properties() {
 		this.threadPoolSize = 10;
@@ -27,11 +27,13 @@ public class Properties implements Serializable {
 	}
 	
 	/**
-	 * Constructor ,sets the threadpool size and searching alogrithm.
+	 * Constructor ,sets the threadpool size, searching alogrithm, character, port and IP.
 	 * 
 	 * @param size   		  [IN] the size of the threadpool.
 	 * @param solver 		  [IN] the searching algo.
 	 * @param characterChoice [IN] the character chosen.
+	 * @param port            [IN] the port.
+	 * @param ip              [IN] the IP
 	 */
 	public Properties(int size, String solver, int characterChoice, int port, String ip) {
 		this.threadPoolSize = size;
@@ -95,18 +97,38 @@ public class Properties implements Serializable {
 		this.character = character;
 	}
 	
+	/**
+	 * Returns the port.
+	 * 
+	 * @return
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * Sets the port.
+	 * 
+	 * @param port [IN] the port
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
+	/**
+	 * Returns the IP.
+	 * 
+	 * @return
+	 */
 	public String getIp() {
 		return ip;
 	}
 
+	/**
+	 * Sets the IP.
+	 * 
+	 * @param ip [IN] the IP
+	 */
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
