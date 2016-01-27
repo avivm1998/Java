@@ -17,8 +17,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -59,6 +61,15 @@ public class MazeWindow extends BasicWindow implements View {
 	void initWidgets() {
 		shell.setLayout(new GridLayout(2,false));
 
+		shell.addListener(SWT.Close, new Listener() {
+			
+			@Override
+			public void handleEvent(Event arg0) {
+				setChanged();
+				notifyObservers("exit");
+			}
+		});
+		
 		Menu menuBar = new Menu(shell, SWT.BAR);
 		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
 		Menu helpMenu = new Menu(shell, SWT.DROP_DOWN);
@@ -190,6 +201,20 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				/*
+				 * FileDialog fd = new FileDialog(shell,SWT.OPEN);
+				fd.setText("Load Maze");
+				fd.setFilterPath("./");
+				String[] filterExt = { "*.txt", ".maz", "*.*"};
+				fd.setFilterExtensions(filterExt);
+				fileName = fd.open();
+				
+				if(fileName != null) {
+					setChanged();
+					notifyObservers("load maze " + fileName + " " + fileName);
+				}
+				 */
+				
 				Shell mazeLoader = new Shell(display);
 				mazeLoader.setSize(250, 300);
 				mazeLoader.setLayout(new GridLayout(2,false));
@@ -292,6 +317,7 @@ public class MazeWindow extends BasicWindow implements View {
 						if(!(nameInput.getText().equals("") || floorsInput.getText().equals("") || floorWidthInput.getText().equals("") || floorLengthInput.getText().equals(""))) {
 							if(mazeDisplayer != null){
 								mazeDisplayer.showSolution = false;
+								mazeDisplayer.lockedKeys = false;
 								mazeDisplayer.solution = null;
 							}
 							mazeName = nameInput.getText();
@@ -504,6 +530,7 @@ public class MazeWindow extends BasicWindow implements View {
 						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new JohnCenaCharacter(shell, maze.getEntrance()), character_pickt);
 					mazeDisplayer.maze = maze;
 					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
+					mazeDisplayer.player.setPosition(maze.getEntrance());
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
 					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);

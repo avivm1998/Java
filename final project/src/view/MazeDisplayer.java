@@ -25,6 +25,7 @@ public abstract class MazeDisplayer extends Canvas{
 	Maze3d maze;
 	Solution<Position> solution;
 	boolean showSolution;
+	public boolean lockedKeys = false;
 	
 	/**
 	 * Constructor with parameters

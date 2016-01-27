@@ -1,6 +1,8 @@
 package view;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -31,14 +33,20 @@ public class MyServer implements View {
 	 * 
 	 * @param settings [IN] the program's properties. 
 	 */
-	public MyServer(Properties settings) {
-		this.settings = settings;
-		this.handler = new MyClientHandler();
-		clients = new HashMap<String, OutputStream>();
+	public MyServer() {
+		try {
+			this.setUpSettings();
+			this.handler = new MyClientHandler();
+			clients = new HashMap<String, OutputStream>();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public void start() throws Exception{
+		
 		server = new ServerSocket(settings.getPort());
 		server.setSoTimeout(10 * 1000);
 		threadPool=Executors.newFixedThreadPool(settings.getThreadPoolSize());
@@ -60,8 +68,7 @@ public class MyServer implements View {
 										clientsHandled++;
 										System.out.println("\thandling client " + clientsHandled);
 										handler.handleClient(someClient.getInputStream(), someClient.getOutputStream(), "" + clientsHandled);
-										someClient.close();
-										System.out.println("\tdone handling client " + clientsHandled);										
+										someClient.close();								
 									}catch(IOException e){
 										e.printStackTrace();
 									}									
@@ -70,7 +77,7 @@ public class MyServer implements View {
 						}
 					}
 					catch (SocketTimeoutException e){
-						System.out.println("no clinet connected...");
+						System.out.println("no client connected...");
 					} 
 					catch (IOException e) {
 						e.printStackTrace();
@@ -161,6 +168,39 @@ public class MyServer implements View {
 			this.start();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void setUpSettings() throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String choice = "";
+		
+		System.out.println("Enter 1 for default settings, and 2 to create your own!");
+		choice = in.readLine();
+		
+		this.settings = new Properties();
+		if(choice.equals("1")) 
+			return;
+		else {
+			System.out.println("Enter the wanted ThreadPool size: ");
+			choice = in.readLine();
+			settings.setThreadPoolSize(Integer.parseInt(choice));
+			
+			System.out.println("Enter the wanted Searching Algorithm: ");
+			choice = in.readLine();
+			settings.setSearchingAlogrithm(choice);
+			
+			System.out.println("Enter the wanted Character: 1 for John Cena , 2 for Deadpool");
+			choice = in.readLine();
+			settings.setCharacter(Integer.parseInt(choice));
+			
+			System.out.println("Enter the wanted port: ");
+			choice = in.readLine();
+			settings.setPort(Integer.parseInt(choice));
+			
+			System.out.println("Enter the wanted IP adress: ");
+			choice = in.readLine();
+			settings.setIp(choice);
 		}
 	}
 }

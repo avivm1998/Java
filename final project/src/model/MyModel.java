@@ -122,6 +122,9 @@ public class MyModel extends Observable implements Model {
 	@Override
 	public void exit() {
 		try {
+			PrintWriter out = new PrintWriter(theServer.getOutputStream());
+			out.println("done");
+			
 			theServer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

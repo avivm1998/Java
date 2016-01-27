@@ -124,9 +124,9 @@ public class Presenter implements Observer {
 								v.display("Invalid Command!");
 						}
 				} catch(IOException e) {
-					e.printStackTrace();
+					m.exit();
 				} catch(Exception e) {
-					e.printStackTrace();
+					v.sendStringToClient(e.getMessage(), clients.get(currentClient));
 			}
 		}
 		

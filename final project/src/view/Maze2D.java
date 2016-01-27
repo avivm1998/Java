@@ -28,7 +28,6 @@ import algorithms.search.State;
  */
 public class Maze2D extends MazeDisplayer{
 	
-
 	 public Image walls;
 	 public Image floorDownPassage;
 	 public Image floorUpPassage;
@@ -92,8 +91,10 @@ public class Maze2D extends MazeDisplayer{
 					      for(int j=0;j<mazeData[i].length;j++){
 					          int x=j*w;
 					          int y=i*h;
+					        
 					          if(player.position.equals(maze.getGoalPosition())) {
 								  e.gc.drawImage(winScreen, 0, 0, winScreen.getBounds().width, winScreen.getBounds().height, 0, 0, width, height);
+								  lockedKeys = true;
 								  return;
 					          }
 					          if(showSolution == true && solution.getSolution().indexOf(new State<Position>(new Position(currentFloor, i, j))) != -1)
@@ -125,6 +126,8 @@ public class Maze2D extends MazeDisplayer{
 				
 				@Override
 				public void keyPressed(KeyEvent arg0) {
+					if(lockedKeys == true)
+			        	  return;
 					if(arg0.keyCode == SWT.ARROW_DOWN)
 						moveDown();
 					else if(arg0.keyCode == SWT.ARROW_UP)

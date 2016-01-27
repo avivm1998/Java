@@ -160,8 +160,8 @@ public class MyModel extends Observable implements Model{
 		if(mazePool.get(name) != null)
 			throw new Exception("Can not override " + name);
 		
-		if(x < 0 || y < 0 || z < 0) 
-			throw new Exception("Sizes can not be negative");
+		if(x <= 0 || y <= 0 || z <= 0) 
+			throw new Exception("Bad dimension input");
 		
 		Future<Maze3d> mazeFuture = threadPool.submit(new Callable<Maze3d>() {
 			@Override
@@ -224,7 +224,7 @@ public class MyModel extends Observable implements Model{
 		byte[] compressedMaze = maze.toByteArray();
 		
 		try {
-			out = new MyCompressorOutputStream(new FileOutputStream(fileName));
+			out = new MyCompressorOutputStream(new FileOutputStream("./" + fileName));
 			out.write(compressedMaze);
 			
 			this.setChanged();
@@ -252,6 +252,7 @@ public class MyModel extends Observable implements Model{
 		int z = 0;
 		
 		try {
+			System.out.println(fileName);
 			fin = new FileInputStream(fileName);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

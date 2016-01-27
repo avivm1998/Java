@@ -28,7 +28,7 @@ public class GenerateMaze3dCommand implements Command {
 	}
 	
 	@Override
-	public void doCommand(String args) throws Exception{
+	public void doCommand(String args) throws Exception {
 		String[] parameters = args.split(" ");
 		m.generateMaze3d(parameters[0], parameters[1], Integer.parseInt(parameters[2]), Integer.parseInt(parameters[3]), Integer.parseInt(parameters[4]));
 	}

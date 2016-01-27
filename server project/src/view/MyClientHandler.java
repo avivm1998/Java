@@ -19,12 +19,14 @@ public class MyClientHandler extends Observable implements ClientHandler {
 		
 		try {
 			while((command = in.readLine()) != null) {
+				if(command.equals("done"))
+					return;
+				
 				setChanged();
 				notifyObservers(clientID + " " + command);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 }

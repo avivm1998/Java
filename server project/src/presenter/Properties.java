@@ -16,7 +16,7 @@ public class Properties implements Serializable {
 	private String ip;
 	
 	/**
-	 * Default constructor ,sets the threadpool size to 10, the searching alogrithm to "bfs" ,the character John Cena, the port 2000 and the IP 127.0.0.1.
+	 * Default constructor ,sets the thread pool size to 10, the searching algorithm to "bfs" ,the character John Cena, the port 2000 and the IP 127.0.0.1.
 	 */
 	public Properties() {
 		this.threadPoolSize = 10;
@@ -27,10 +27,10 @@ public class Properties implements Serializable {
 	}
 	
 	/**
-	 * Constructor ,sets the threadpool size, searching alogrithm, character, port and IP.
+	 * Constructor ,sets the thread pool size, searching algorithm, character, port and IP.
 	 * 
-	 * @param size   		  [IN] the size of the threadpool.
-	 * @param solver 		  [IN] the searching algo.
+	 * @param size   		  [IN] the size of the thread pool.
+	 * @param solver 		  [IN] the searching algorithm.
 	 * @param characterChoice [IN] the character chosen.
 	 * @param port            [IN] the port.
 	 * @param ip              [IN] the IP
@@ -44,7 +44,7 @@ public class Properties implements Serializable {
 	}
 	
 	/**
-	 * Returns the size of the threadpool.
+	 * Returns the size of the thread pool.
 	 * 
 	 * @return
 	 */
@@ -53,16 +53,16 @@ public class Properties implements Serializable {
 	}
 
 	/**
-	 * Sets the threadpool size.
+	 * Sets the thread pool size.
 	 * 
-	 * @param threadPoolSize [IN] the threadpool size
+	 * @param threadPoolSize [IN] the thread pool size
 	 */
 	public void setThreadPoolSize(int threadPoolSize) {
 		this.threadPoolSize = threadPoolSize;
 	}
 
 	/**
-	 * Returns the searching alogrithm
+	 * Returns the searching algorithm
 	 * 
 	 * @return
 	 */
@@ -71,9 +71,9 @@ public class Properties implements Serializable {
 	}
 
 	/**
-	 * Sets the searching alogrithm.
+	 * Sets the searching algorithm.
 	 * 
-	 * @param searchingAlogrithm [IN] the searching alogrithm.
+	 * @param searchingAlogrithm [IN] the searching algorithm.
 	 */
 	public void setSearchingAlogrithm(String searchingAlogrithm) {
 		this.searchingAlogrithm = searchingAlogrithm;
