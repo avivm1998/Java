@@ -49,30 +49,30 @@ public class MyMaze3dGenerator2 extends CommonMaze3dGenerator {
 		allDirections.add(Direction.LEFT);
 		Collections.shuffle(allDirections);
 		
-			for (int i = 0; i < allDirections.size(); i++) {
-				Direction direction = allDirections.get(i);
-				
-				if(maze.getNeighborCell(head, direction) == null) {
-					continue;
-				}
-				if(maze.getNeighborCell(maze.getNeighborCell(head, direction), direction) == null) {
-					continue;
-				}
-				
-				head = maze.getNeighborCell(head, direction);
-				head = maze.getNeighborCell(head, direction);
-				if (maze.getCell(head) == CellValue.WALL) {
-					stack.push(head);
-					maze.setCell(head, CellValue.PASSAGE);
-					head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
-					maze.setCell(head, CellValue.PASSAGE);
-					flag = true;
-					head = maze.getNeighborCell(head, direction);
-					dfsGenerate(maze, stack);
-				}
-				head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
-				head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
+		for (int i = 0; i < allDirections.size(); i++) {
+			Direction direction = allDirections.get(i);
+			
+			if(maze.getNeighborCell(head, direction) == null) {
+				continue;
 			}
+			if(maze.getNeighborCell(maze.getNeighborCell(head, direction), direction) == null) {
+				continue;
+			}
+			
+			head = maze.getNeighborCell(head, direction);
+			head = maze.getNeighborCell(head, direction);
+			if (maze.getCell(head) == CellValue.WALL) {
+				stack.push(head);
+				maze.setCell(head, CellValue.PASSAGE);
+				head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
+				maze.setCell(head, CellValue.PASSAGE);
+				flag = true;
+				head = maze.getNeighborCell(head, direction);
+				dfsGenerate(maze, stack);
+			}
+			head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
+			head = maze.getNeighborCell(head, Direction.getOppositeDirection(direction));
+		}
 		
 		if(!flag && !stack.isEmpty())
 			stack.pop();

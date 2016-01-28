@@ -91,10 +91,11 @@ public class Maze2D extends MazeDisplayer{
 					      for(int j=0;j<mazeData[i].length;j++){
 					          int x=j*w;
 					          int y=i*h;
-					        
+
 					          if(player.position.equals(maze.getGoalPosition())) {
 								  e.gc.drawImage(winScreen, 0, 0, winScreen.getBounds().width, winScreen.getBounds().height, 0, 0, width, height);
 								  lockedKeys = true;
+								  System.out.println("GAME OVER!");
 								  return;
 					          }
 					          if(showSolution == true && solution.getSolution().indexOf(new State<Position>(new Position(currentFloor, i, j))) != -1)
@@ -139,17 +140,20 @@ public class Maze2D extends MazeDisplayer{
 					else if(arg0.keyCode == SWT.PAGE_DOWN) {
 						if(mazeData[player.getY()][player.getZ()] == 2 || mazeData[player.getY()][player.getZ()] == 4) {
 							setMazeData(maze.getFloorState(currentFloor - 1), currentFloor - 1);
+							player.position.setX(player.getX() - 1);
 							redraw();
 						}
 					}
 					else if(arg0.keyCode == SWT.PAGE_UP) {
 						if(mazeData[player.getY()][player.getZ()] == 3 || mazeData[player.getY()][player.getZ()] == 4) {
 							setMazeData(maze.getFloorState(currentFloor + 1), currentFloor + 1);
+							player.position.setX(player.getX() + 1);
 							redraw();
 						}
 					}
 				}
 			});
+	    	
 	    	addMouseWheelListener(new MouseWheelListener() {
 				
 				@Override

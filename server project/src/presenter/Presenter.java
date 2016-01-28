@@ -63,7 +63,7 @@ public class Presenter implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if(arg0 instanceof ClientHandler) {
+		if(arg0 instanceof ClientHandler || arg0 instanceof View) {
 			if(arg1 instanceof Properties) {
 				m.setProperties((Properties)arg1);
 			}
@@ -162,4 +162,7 @@ public class Presenter implements Observer {
 		this.commandPool = commandPool;
 	}
 
+	public void shutDown() {
+		m.exit();
+	}
 }

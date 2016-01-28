@@ -89,14 +89,6 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				Random rand = new Random();
-				mazeDisplayer.player.setPosition(mazeDisplayer.solution.getSolution().get(rand.nextInt(mazeDisplayer.solution.getSolution().size())).getState());
-				getDisplay().syncExec(new Runnable() { 
-					@Override
-					public void run() {
-						mazeDisplayer.redraw();
-					}
-				});
 				mazeDisplayer.showSolution = true;
 				getDisplay().syncExec(new Runnable() {
 					@Override
@@ -120,6 +112,7 @@ public class MazeWindow extends BasicWindow implements View {
 				if(!mazeDisplayer.showSolution) {
 					Random rand = new Random();
 					mazeDisplayer.player.setPosition(mazeDisplayer.solution.getSolution().get(rand.nextInt(mazeDisplayer.solution.getSolution().size())).getState());
+					mazeDisplayer.currentFloor = player.getX();
 					display("You are on the right path!");
 					getDisplay().syncExec(new Runnable() { 
 						@Override
@@ -524,13 +517,16 @@ public class MazeWindow extends BasicWindow implements View {
 			@Override
 			public void run() {
 				if(mazeDisplayer == null) {
+					player = maze.getEntrance();
+					
 					if(character_pickt == 2)
-						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new DeadpoolCharacter(shell, maze.getEntrance()), character_pickt);
+						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new DeadpoolCharacter(shell, player), character_pickt);
 					else
-						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new JohnCenaCharacter(shell, maze.getEntrance()), character_pickt);
+						mazeDisplayer = new Maze2D(shell, SWT.DOUBLE_BUFFERED | SWT.BORDER, new JohnCenaCharacter(shell, player), character_pickt);
+					
 					mazeDisplayer.maze = maze;
-					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), maze.getEntrance().getX());
-					mazeDisplayer.player.setPosition(maze.getEntrance());
+					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), player.getX());
+					//mazeDisplayer.player.setPosition(maze.getEntrance());
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
 					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);

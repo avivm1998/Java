@@ -13,6 +13,7 @@ public class Run {
 		Presenter p = new Presenter(m, server);
 		m.addObserver(p);
 		server.handler.addObserver(p);
+		server.addObserver(p);
 		server.getUserCommand();
 	}
 

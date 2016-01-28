@@ -11,7 +11,6 @@ import java.io.Serializable;
 public class Properties implements Serializable {
 	private int threadPoolSize;
 	private String searchingAlogrithm;
-	private int character;
 	private int port;
 	private String ip;
 	
@@ -21,7 +20,6 @@ public class Properties implements Serializable {
 	public Properties() {
 		this.threadPoolSize = 10;
 		this.searchingAlogrithm = "bfs";
-		this.character = 1;
 		this.port = 2000;
 		this.ip = "127.0.0.1";
 	}
@@ -35,10 +33,9 @@ public class Properties implements Serializable {
 	 * @param port            [IN] the port.
 	 * @param ip              [IN] the IP
 	 */
-	public Properties(int size, String solver, int characterChoice, int port, String ip) {
+	public Properties(int size, String solver, int port, String ip) {
 		this.threadPoolSize = size;
 		this.searchingAlogrithm = solver;
-		this.character = characterChoice;
 		this.port = port;
 		this.ip = ip;
 	}
@@ -77,24 +74,6 @@ public class Properties implements Serializable {
 	 */
 	public void setSearchingAlogrithm(String searchingAlogrithm) {
 		this.searchingAlogrithm = searchingAlogrithm;
-	}
-
-	/**
-	 * Returns the character chosen
-	 * 
-	 * @return
-	 */
-	public int getCharacter() {
-		return character;
-	}
-
-	/**
-	 * Sets the character.
-	 * 
-	 * @param character [IN]
-	 */
-	public void setCharacter(int character) {
-		this.character = character;
 	}
 	
 	/**
