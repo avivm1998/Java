@@ -77,11 +77,11 @@ public class MyServer extends Observable implements View {
 					public void run() {
 						try {
 							BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-							line = in.readLine();
 							
-							if(line.equals("exit")) 
-								close();
+							while(!(line = in.readLine()).equals("exit"));
+							close();
 								
+						} catch(NullPointerException e) {
 						} catch (IOException e) {
 							e.printStackTrace();
 						} catch (Exception e) {

@@ -333,20 +333,24 @@ public class MazeWindow extends BasicWindow implements View {
 				fileName = fd.open();
 				
 				try {
-					XMLDecoder in = new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
-					settings = (Properties)in.readObject();
-					in.close();
-					character_pickt = settings.getCharacter();
-					setChanged();
-					notifyObservers(settings);
+					if(fileName != null) {
+						XMLDecoder in = new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
+						settings = (Properties)in.readObject();
+						in.close();
+						character_pickt = settings.getCharacter();
+						setChanged();
+						notifyObservers(settings);
+					}
 				
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
 				
-				saveFile.setEnabled(true);
-				loadFile.setEnabled(true);
-				generate.setEnabled(true);
+				if(fileName != null) {
+					saveFile.setEnabled(true);
+					loadFile.setEnabled(true);
+					generate.setEnabled(true);
+				}
 			}
 			
 			@Override
