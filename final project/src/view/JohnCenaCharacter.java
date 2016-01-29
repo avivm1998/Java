@@ -23,7 +23,7 @@ public class JohnCenaCharacter extends CommonCharacter {
 	 * Constructor with parameters.
 	 * 
 	 * @param parent [IN] the shell.
-	 * @param start  [IN] the start position.
+	 * @param start  [IN] the starting position.
 	 */
 	public JohnCenaCharacter(Shell parent, Position start) {
 		super(parent, start);

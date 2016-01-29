@@ -17,7 +17,7 @@ public abstract class CommonCharacter {
 	Shell parent;
 	
 	/**
-	 * Constructor with parameters.
+	 * Constructor with parameters, Setting the parent composite and starting position.
 	 * 
 	 * @param parent [IN] the window in which the character is in.
 	 * @param start  [IN] the start position.
@@ -30,7 +30,7 @@ public abstract class CommonCharacter {
 	/**
 	 * Returns the character's position. 
 	 * 
-	 * @return the position
+	 * @return The position.
 	 */
 	public Position getPosition() {
 		return position;
@@ -39,83 +39,83 @@ public abstract class CommonCharacter {
 	/**
 	 * Sets the position.
 	 * 
-	 * @param position [IN] the position to set
+	 * @param position [IN] The position to be set.
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
 	}
 
 	/**
-	 * @return the x value of the character
+	 * @return The current floor of the character.
 	 */
 	public int getX(){
 		return this.position.getX();
 	}
 
 	/**
-	 * @return the y value of the character
+	 * @return The row of the character.
 	 */
 	public int getY(){
 		return this.position.getY();
 	}
 
 	/**
-	 * @return the z value of the character
+	 * @return The column of the character.
 	 */
 	public int getZ(){
 		return this.position.getZ();
 	}
 	
 	/**
-	 * moving the character up
+	 * Moving the character one step up.
 	 */
 	public void moveUp() {
 		position.setX(position.getX() - 1);
 	}
 	
 	/**
-	 * moving the character down
+	 * Moving the character one step down.
 	 */
 	public void moveDown() {
 		position.setX(position.getX() - 1);
 	}
 	
 	/**
-	 * moving the character left
+	 * Moving the character one step left.
 	 */
 	public void moveLeft() {
 		position.setZ(position.getZ() - 1);
 	}
 	
 	/**
-	 * moving the character right
+	 * Moving the character one step right.
 	 */
 	public void moveRight() {
 		position.setZ(position.getZ() + 1);
 	}
 	
 	/**
-	 * moving the character forward
+	 * Moving the character one step forward.
 	 */
 	public void moveForward() {
 		position.setY(position.getY() - 1);
 	}
 	
 	/**
-	 * moving the character backward
+	 * Moving the character one step backwards.
 	 */
 	public void moveBackward() {
 		position.setY(position.getY() + 1);
 	}
 	
 	/**
-	 * drawing the character 
+	 * Drawing the character. 
 	 * 
-	 * @param e      [IN] the {@link PaintEvent}
-	 * @param x      [IN] the x value in the canvas
-	 * @param y      [IN] the y value in the canvas
-	 * @param width  [IN] the width of the character
-	 * @param height [IN] the height of the character
+	 * @param e      [IN] The event {@link PaintEvent}
+	 * @param x      [IN] The x value in the canvas
+	 * @param y      [IN] The y value in the canvas
+	 * @param width  [IN] The width of the character
+	 * @param height [IN] The height of the character
 	 */
 	public abstract void draw(PaintEvent e,int x,int y,int width,int height);
 }

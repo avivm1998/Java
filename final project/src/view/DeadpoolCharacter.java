@@ -23,7 +23,7 @@ public class DeadpoolCharacter extends CommonCharacter {
 	 * Constructor with parameters.
 	 * 
 	 * @param parent [IN] the shell.
-	 * @param start  [IN] the start position.
+	 * @param start  [IN] the starting position.
 	 */
 	public DeadpoolCharacter(Shell parent, Position start) {
 		super(parent, start);

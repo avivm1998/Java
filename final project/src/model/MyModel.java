@@ -13,6 +13,12 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import presenter.Properties;
 
+/**
+ * MyModel, a concrete type of the Model in the MVP architecture. 
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public class MyModel extends Observable implements Model {
 
 	private Socket theServer;
@@ -20,6 +26,9 @@ public class MyModel extends Observable implements Model {
 	private HashMap<String, Maze3d> mazePool;
 	private HashMap<String, Solution<Position>> solutionPool;
 	
+	/**
+	 * Default constructor, Setting up the defualt settings, Starting up the connection to the server, and starting up the databases.
+	 */
 	public MyModel() {
 		try {
 			settings = new Properties();

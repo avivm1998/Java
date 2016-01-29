@@ -20,6 +20,12 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import presenter.Properties;
 
+/**
+ * MyServer is the server that connects to the clients and provides them the commands they send, Also it is the View in the MVP architecture.
+ * 
+ * @author Aviv Moran
+ *
+ */
 public class MyServer extends Observable implements View {
 	Properties settings;
 	ServerSocket server;
@@ -31,26 +37,27 @@ public class MyServer extends Observable implements View {
 	HashMap<String, OutputStream> clients;
 	String line;
 	int counter = 0;
-	static Object lock;
 	
 	/**
-	 * Constructer with parameters
+	 * Defualt constructor, setting the properties and starting up the clients hash map.
 	 * 
 	 * @param settings [IN] the program's properties. 
 	 */
 	public MyServer() {
 		try {
-			lock = new Object();
 			this.setUpSettings();
 			this.handler = new MyClientHandler();
 			clients = new HashMap<String, OutputStream>();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	
+	/**
+	 * Starts the server, accepting clients and opening handlers for them. 
+	 * 
+	 * @throws Exception [THROWN] In case of non-handled exception.
+	 */
 	public void start() throws Exception{
 		
 		server = new ServerSocket(settings.getPort());
@@ -78,7 +85,6 @@ public class MyServer extends Observable implements View {
 						} catch (IOException e) {
 							e.printStackTrace();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -109,25 +115,6 @@ public class MyServer extends Observable implements View {
 					}
 					catch (SocketTimeoutException e){
 							System.out.println("no client connected...");
-
-
-						
-						/*
-						 * new Thread(new Runnable() {
-								@Override
-								public void run() {
-									BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-									String line;
-									
-									try {
-										if((line = in.readLine()).equals("exit"))
-											close();
-									} catch (Exception e) {
-										e.printStackTrace();
-									}
-								};
-							}).start();
-						 */
 					} 
 					catch (IOException e) {
 						e.printStackTrace();
@@ -144,7 +131,7 @@ public class MyServer extends Observable implements View {
 	/**
 	 * An organized exit
 	 * 
-	 * @throws Exception
+	 * @throws Exception [THROWN] In case the thread pool was interrupted while waiting to shutdown or bad socket closure.
 	 */
 	public void close() throws Exception{
 		System.out.println("starting safe exit");
@@ -189,9 +176,10 @@ public class MyServer extends Observable implements View {
 		System.out.println(sol.toString());
 	}
 
-	public void sendMazeToClient(Maze3d maze, OutputStream outToServer) {
+	@Override
+	public void sendMazeToClient(Maze3d maze, OutputStream outToClient) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			ObjectOutputStream out = new ObjectOutputStream(outToClient);
 			out.writeObject(maze);
 			out.flush();
 		} catch (IOException e) {
@@ -199,9 +187,10 @@ public class MyServer extends Observable implements View {
 		}
 	}
 	
-	public void sendSolutionToClient(Solution<Position> solution, OutputStream outToServer) {
+	@Override
+	public void sendSolutionToClient(Solution<Position> solution, OutputStream outToClient) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			ObjectOutputStream out = new ObjectOutputStream(outToClient);
 			out.writeObject(solution);
 			out.flush();
 		} catch (IOException e) {
@@ -209,9 +198,10 @@ public class MyServer extends Observable implements View {
 		}
 	}
 	
-	public void sendStringToClient(String arg, OutputStream outToServer) {
+	@Override
+	public void sendStringToClient(String arg, OutputStream outToClient) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(outToServer);
+			ObjectOutputStream out = new ObjectOutputStream(outToClient);
 			out.writeObject(arg);
 			out.flush();
 		} catch (IOException e) {
@@ -228,6 +218,9 @@ public class MyServer extends Observable implements View {
 		}
 	}
 	
+	/**
+	 * Sets up the properties of the server.
+	 */
 	public void setUpSettings() throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String choice = "";

@@ -77,18 +77,38 @@ public class MyModel extends Observable implements Model{
 		}
 	}
 
+	/**
+	 * Gets the thread pool.
+	 * 
+	 * @return The thread pool. {@link ExecutorService}
+	 */
 	public ExecutorService getThreadPool() {
 		return threadPool;
 	}
 
+	/**
+	 * Sets the thread pool with the given executor.
+	 * 
+	 * @param threadPool [IN] The executor. {@link ExecutorService}
+	 */
 	public void setThreadPool(ExecutorService threadPool) {
 		this.threadPool = threadPool;
 	}
 
+	/**
+	 * Gets the cache.
+	 * 
+	 * @return The cache. {@link HashMap<Maze3d, Solution<Position>>}
+	 */
 	public HashMap<Maze3d, Solution<Position>> getCache() {
 		return cache;
 	}
 
+	/**
+	 * Sets the cache with the given hash map.
+	 * 
+	 * @param cache [IN] The hash map. {@link HashMap<Maze3d, Solution<Position>>}
+	 */
 	public void setCache(HashMap<Maze3d, Solution<Position>> cache) {
 		this.cache = cache;
 	}

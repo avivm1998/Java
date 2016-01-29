@@ -194,20 +194,6 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				/*
-				 * FileDialog fd = new FileDialog(shell,SWT.OPEN);
-				fd.setText("Load Maze");
-				fd.setFilterPath("./");
-				String[] filterExt = { "*.txt", ".maz", "*.*"};
-				fd.setFilterExtensions(filterExt);
-				fileName = fd.open();
-				
-				if(fileName != null) {
-					setChanged();
-					notifyObservers("load maze " + fileName + " " + fileName);
-				}
-				 */
-				
 				Shell mazeLoader = new Shell(display);
 				mazeLoader.setSize(250, 300);
 				mazeLoader.setLayout(new GridLayout(2,false));
@@ -450,8 +436,9 @@ public class MazeWindow extends BasicWindow implements View {
 							XMLEncoder xmlEncoder = new XMLEncoder(bos);
 							xmlEncoder.writeObject(settings);
 							xmlEncoder.close();
+							setChanged();
+							notifyObservers(settings);
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						
@@ -526,7 +513,6 @@ public class MazeWindow extends BasicWindow implements View {
 					
 					mazeDisplayer.maze = maze;
 					mazeDisplayer.setMazeData(maze.getFloorState(maze.getEntrance().getX()), player.getX());
-					//mazeDisplayer.player.setPosition(maze.getEntrance());
 					mazeDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
 					mazeDisplayer.redraw();
 					shell.setSize(shell.getSize().x + 1, shell.getSize().y + 1);

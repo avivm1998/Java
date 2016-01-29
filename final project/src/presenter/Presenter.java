@@ -10,7 +10,7 @@ import model.Model;
 import view.View;
 
 /**
- * The presenter is in charge of connecting the view and the model using MVP. 
+ * The Presenter is in charge of connecting the view and the model in the MVP architecture. 
  * 
  * @author Aviv Mora & Ayal Naim
  *
@@ -20,10 +20,10 @@ public class Presenter implements Observer {
 	private View v;
 	
 	/**
-	 * Constructor with parameters.
+	 * Constructor with parameters, Setting the model and view of the architecture.
 	 * 
-	 * @param m [IN] the model
-	 * @param v [IN] the view
+	 * @param m [IN] The model.
+	 * @param v [IN] The view.
 	 */
 	public Presenter(Model m, View v) {
 		this.m = m;

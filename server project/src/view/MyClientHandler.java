@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Observable;
 
+/**
+ * MyClientHandler is a concrete type of client handler which treats the clients of the server.
+ * 
+ * @author Aviv Moran & Ayal Naim
+ *
+ */
 public class MyClientHandler extends Observable implements ClientHandler {
 
 	@Override

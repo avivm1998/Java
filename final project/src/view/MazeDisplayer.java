@@ -28,10 +28,10 @@ public abstract class MazeDisplayer extends Canvas{
 	public boolean lockedKeys = false;
 	
 	/**
-	 * Constructor with parameters
+	 * Constructor with parameters, setting the parent composite and the style of the widget.
 	 * 
-	 * @param parent [IN]
-	 * @param style  [IN]
+	 * @param parent [IN] The composite. {@link Composite}
+	 * @param style  [IN] The style.
 	 */
 	public MazeDisplayer(Composite parent, int style) {
 		super(parent, style);
@@ -41,8 +41,8 @@ public abstract class MazeDisplayer extends Canvas{
 	/**
 	 * Sets the maze data to the first parameter and the current floor to the second parameter.
 	 * 
-	 * @param mazeData    [IN] a 2D maze.
-	 * @param floorNumber [IN] the floor it represents.
+	 * @param mazeData    [IN] The 2 dimensional cross. {@link Integer[][]}
+	 * @param floorNumber [IN] The floor it represents. 
 	 */
 	public void setMazeData(int[][] mazeData, int floorNumber){
 		this.mazeData=mazeData;

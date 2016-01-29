@@ -34,7 +34,7 @@ public abstract class BasicWindow extends Observable implements Runnable {
  	/**
  	 * Returns the display.
  	 * 
- 	 * @return
+ 	 * @return The display.
  	 */
  	public Display getDisplay() {
 		return display;
@@ -54,7 +54,7 @@ public abstract class BasicWindow extends Observable implements Runnable {
 	/**
 	 * Returns the shell.
 	 * 
-	 * @return
+	 * @return The shell.
 	 */
 	public Shell getShell() {
 		return shell;

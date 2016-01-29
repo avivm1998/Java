@@ -39,9 +39,9 @@ public class Maze2D extends MazeDisplayer{
 	 /**
 	  * Constructor with parameters.
 	  * 
-	  * @param parent [IN] 
-	  * @param style  [IN]
-	  * @param player [IN]
+	  * @param parent [IN] The parent composite. {@link Composite}
+	  * @param style  [IN] The style.
+	  * @param player [IN] The wanted player. {@link CommonCharacter}
 	  */
 	 public Maze2D(Composite parent,int style, CommonCharacter player, int theme){
 	        super(parent, style);
@@ -117,6 +117,7 @@ public class Maze2D extends MazeDisplayer{
 					}
 			});
 	    	
+	    	// The key listeners in the game.
 	    	addKeyListener(new KeyListener() {
 				
 				@Override
@@ -154,6 +155,7 @@ public class Maze2D extends MazeDisplayer{
 				}
 			});
 	    	
+	    	// The zoom in & out listener.
 	    	addMouseWheelListener(new MouseWheelListener() {
 				
 				@Override
