@@ -29,7 +29,6 @@ public class Properties implements Serializable {
 	 * 
 	 * @param size   		  [IN] the size of the thread pool.
 	 * @param solver 		  [IN] the searching algorithm.
-	 * @param characterChoice [IN] the character chosen.
 	 * @param port            [IN] the port.
 	 * @param ip              [IN] the IP
 	 */
@@ -43,7 +42,7 @@ public class Properties implements Serializable {
 	/**
 	 * Returns the size of the thread pool.
 	 * 
-	 * @return
+	 * @return The thread pool size.
 	 */
 	public int getThreadPoolSize() {
 		return threadPoolSize;
@@ -61,7 +60,7 @@ public class Properties implements Serializable {
 	/**
 	 * Returns the searching algorithm
 	 * 
-	 * @return
+	 * @return The searching algorithm.
 	 */
 	public String getSearchingAlogrithm() {
 		return searchingAlogrithm;
@@ -79,7 +78,7 @@ public class Properties implements Serializable {
 	/**
 	 * Returns the port.
 	 * 
-	 * @return
+	 * @return The port.
 	 */
 	public int getPort() {
 		return port;
@@ -97,7 +96,7 @@ public class Properties implements Serializable {
 	/**
 	 * Returns the IP.
 	 * 
-	 * @return
+	 * @return The IP.
 	 */
 	public String getIp() {
 		return ip;

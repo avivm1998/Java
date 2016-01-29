@@ -98,7 +98,7 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Gets the cache.
 	 * 
-	 * @return The cache. {@link HashMap<Maze3d, Solution<Position>>}
+	 * @return The cache. {@link HashMap}
 	 */
 	public HashMap<Maze3d, Solution<Position>> getCache() {
 		return cache;
@@ -107,7 +107,7 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Sets the cache with the given hash map.
 	 * 
-	 * @param cache [IN] The hash map. {@link HashMap<Maze3d, Solution<Position>>}
+	 * @param cache [IN] The hash map. {@link HashMap}
 	 */
 	public void setCache(HashMap<Maze3d, Solution<Position>> cache) {
 		this.cache = cache;
@@ -116,7 +116,7 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Gets the maze HashMap.
 	 * 
-	 * @return [OUT] The mazePool {@link HashMap<String, Maze3d>}.
+	 * @return [OUT] The mazePool {@link HashMap}.
 	 */
 	public HashMap<String, Maze3d> getMazePool() {
 		return mazePool;
@@ -125,7 +125,7 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Sets the mazePool with the given HashMap.
 	 * 
-	 * @param mazePool [IN] The mazePool to be set {@link HashMap<String, Maze3d>}.
+	 * @param mazePool [IN] The mazePool to be set {@link HashMap}.
 	 */
 	public void setMazePool(HashMap<String, Maze3d> mazePool) {
 		this.mazePool = mazePool;
@@ -134,16 +134,16 @@ public class MyModel extends Observable implements Model{
 	/**
 	 * Gets the solution HashMap.
 	 * 
-	 * @return [OUT] The solutionPool {@link HashMap<String, Solution<Position>>}.
+	 * @return [OUT] The solutionPool {@link HashMap}.
 	 */
 	public HashMap<String, Solution<Position>> getSolutionPool() {
 		return solutionPool;
 	}
 
 	/**
-	 * Sets the mazePool with the given HashMap.
+	 * Sets the solutionPool with the given HashMap.
 	 * 
-	 * @param mazePool [IN] The mazePool to be set {@link HashMap<String, Maze3d>}.
+	 * @param solutionPool [IN] The solutionPool to be set {@link HashMap}.
 	 */
 	public void setSolutionPool(HashMap<String, Solution<Position>> solutionPool) {
 		this.solutionPool = solutionPool;
@@ -196,21 +196,6 @@ public class MyModel extends Observable implements Model{
 				return maze;
 			}
 		});
-		
-		/*
-		 * threadPool.execute(new Runnable() {
-			@Override
-			public void run() {
-				Maze3dGenerator mg = new MyMaze3dGenerator2();
-				Maze3d maze = mg.generate(x, y, z);
-				mazePool.put(name, maze);
-				setChanged();
-				notifyObservers(new Integer(client));
-				setChanged();
-				notifyObservers(maze);
-			}
-		});
-		 */
 	}
 
 	@Override

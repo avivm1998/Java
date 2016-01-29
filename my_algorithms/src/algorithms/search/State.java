@@ -84,7 +84,7 @@ public class State<T> implements Serializable {
 	/**
 	 * Overrides the equals method in the Object class.
 	 * 
-	 * @param other [IN] The other object to be compared to {@link Object}.
+	 * @param obj [IN] The other object to be compared to {@link Object}.
 	 * 
 	 * @return True if same , False if different.
 	 */

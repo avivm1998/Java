@@ -220,7 +220,7 @@ public class MyServer extends Observable implements View {
 	/**
 	 * Sets up the properties of the server.
 	 * 
-	 * Exception [THROWN] In case of IO exception.
+	 * @throws IOException [THROWN] In case of IO exception.
 	 */
 	public void setUpSettings() throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

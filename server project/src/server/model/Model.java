@@ -22,6 +22,7 @@ public interface Model {
 	 * @param x        [IN] The number of floors.
 	 * @param y        [IN] The number of rows.
 	 * @param z        [IN] The number of columns.
+	 * @param client   [IN] The client ID.
 	 * 
 	 * @throws Exception [THROWN] In case the maze name was taken.
 	 */
@@ -32,6 +33,7 @@ public interface Model {
 	 * 
 	 * @param mazeName [IN] The maze. {@link String}
 	 * @param Solver   [IN] The solving algorithm {@link Searcher}
+	 * @param client   [IN] The client ID.
 	 * 
 	 * @throws Exception [THROWN] In case there is no such maze to solve.
 	 */
@@ -42,6 +44,7 @@ public interface Model {
 	 * 
 	 * @param mazeName [IN] The name of the maze. {@link String}
 	 * @param fileName [IN] The wanted name of the saved file. {@link String}
+	 * @param client   [IN] The client ID.
 	 * 
 	 * @throws Exception [THROWN] In case there is no such maze to save.
 	 */
@@ -52,6 +55,7 @@ public interface Model {
 	 * 
 	 * @param fileName [IN] The name of the file to be read from. {@link String}
 	 * @param mazeName [IN] The name of the maze to be stored with. {@link String}
+	 * @param client   [IN] The client ID.
 	 * 
 	 * @throws Exception [THROWN] In case there is no such file.
 	 */
@@ -86,7 +90,7 @@ public interface Model {
 	 * 
 	 * @param mazeName [IN] The name of the maze. {@link String}
 	 * 
-	 * @return The solution. {@link Solution<Position>}
+	 * @return The solution. {@link Solution}
 	 * 
 	 * @throws Exception [THROWN] In case there is no such maze.
 	 */

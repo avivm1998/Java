@@ -30,7 +30,7 @@ public interface View {
 	/**
 	 * Displays the solution that is given.
 	 * 
-	 * @param sol [IN] The solution. {@link Solution<Position>}
+	 * @param sol [IN] The solution. {@link Solution}
 	 */
 	void display(Solution<Position> sol);
 	
@@ -40,23 +40,23 @@ public interface View {
 	 * @param maze        [IN] The maze. {@link Maze3d}
 	 * @param outToClient [IN] The output stream of the client. {@link OutputStream}
 	 */
-	public void sendMazeToClient(Maze3d maze, OutputStream outToServer);
+	public void sendMazeToClient(Maze3d maze, OutputStream outToClient);
 	
 	/**
 	 * Sends the given solution to the given client.
 	 * 
-	 * @param solution    [IN] The solution to be sent. {@link Solution<Position>>}
+	 * @param solution    [IN] The solution to be sent. {@link Solution}
 	 * @param outToClient [IN] The output stream of the client. {@link OutputStream}
 	 */
-	public void sendSolutionToClient(Solution<Position> solution, OutputStream outToServer);
+	public void sendSolutionToClient(Solution<Position> solution, OutputStream outToClient);
 	
 	/**
 	 * Sends the given string to the given client.
 	 * 
-	 * @param arg [IN] The message. {@link String}
+	 * @param arg         [IN] The message. {@link String}
 	 * @param outToClient [IN] The output stream of the client. {@link OutputStream}
 	 */
-	public void sendStringToClient(String args, OutputStream outToServer);
+	public void sendStringToClient(String args, OutputStream outToClient);
 	
 	/**
 	 * Gets the users commands.

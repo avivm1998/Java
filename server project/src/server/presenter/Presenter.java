@@ -147,7 +147,7 @@ public class Presenter implements Observer {
 	/**
 	 * Returns the command pool.
 	 * 
-	 * @return
+	 * @return The command pool. {@link HashMap}
 	 */
 	public HashMap<String, Command> getCommandPool() {
 		return commandPool;
@@ -156,7 +156,7 @@ public class Presenter implements Observer {
 	/**
 	 * Sets the command pool.
 	 * 
-	 * @param commandPool
+	 * @param commandPool [IN] The hash map of commands.
 	 */
 	public void setCommandPool(HashMap<String, Command> commandPool) {
 		this.commandPool = commandPool;
