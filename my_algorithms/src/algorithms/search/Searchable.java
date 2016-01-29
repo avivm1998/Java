@@ -6,8 +6,6 @@ import java.util.ArrayList;
  * Searchable a general search problem.
  * 
  * @author Aviv Moran
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}
  */
 
 public interface Searchable<T> {
@@ -31,7 +29,7 @@ public interface Searchable<T> {
      * 
      * @param s [IN] The original state to move from {@link State}.
      * 
-     * @return [OUT] All the available neighbor states {@link ArrayList<State>}.
+     * @return [OUT] All the available neighbor states {@link ArrayList}.
      */
     ArrayList<State<T>> getAllPossibleMoves(State<T> s);
 }

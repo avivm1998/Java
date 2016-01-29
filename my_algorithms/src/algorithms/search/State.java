@@ -6,8 +6,6 @@ import java.io.Serializable;
  * State represents the view of a certain vertex in the search problem.
  * 
  * @author Aviv Moran
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}
  */
 public class State<T> implements Serializable {
 	
@@ -86,9 +84,9 @@ public class State<T> implements Serializable {
 	/**
 	 * Overrides the equals method in the Object class.
 	 * 
-	 * @param obj [IN] The other object to be compared to {@link Object}.
+	 * @param other [IN] The other object to be compared to {@link Object}.
 	 * 
-	 * @return [OUT] True if same , False if different.
+	 * @return True if same , False if different.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -100,9 +98,9 @@ public class State<T> implements Serializable {
 	/**
 	 * Overloads the equals method in the Object class.
 	 * 
-	 * @param obj [IN] The other object to be compared to {@link State}.
+	 * @param other [IN] The other object to be compared to {@link State}.
 	 * 
-	 * @return [OUT] True if same , False if different.
+	 * @return True if same , False if different.
 	 */
 	public boolean equal(State<T> other) { 
 		return this.getState() == other.getState();
@@ -111,7 +109,7 @@ public class State<T> implements Serializable {
 	/**
 	 * Overrides the hashCode method in the Object class , used by HashTables.
 	 * 
-	 * @return [OUT] The matching hash code of the state.
+	 * @return The matching hash code of the state.
 	 */
 	@Override
 	public int hashCode() {

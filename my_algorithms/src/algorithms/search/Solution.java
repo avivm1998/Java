@@ -7,8 +7,6 @@ import java.util.ArrayList;
  * Solution is the output of the search problem solver.
  * 
  * @author Aviv Moran
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}
  */
 public class Solution<T> implements Serializable{
 	private ArrayList<State<T>> solution;
@@ -16,7 +14,7 @@ public class Solution<T> implements Serializable{
 	/**
 	 * Returns the solution of the calling object.
 	 * 
-	 * @return [OUT] The solution {@link ArrayList<State>}.
+	 * @return [OUT] The solution {@link ArrayList}.
 	 */
 	public ArrayList<State<T>> getSolution() {
 		return solution;
@@ -25,7 +23,7 @@ public class Solution<T> implements Serializable{
 	/**
 	 * Sets the solution with the given array.
 	 * 
-	 * @param solution [OUT] The solution to be set {@link ArrayList<State>}.
+	 * @param solution [OUT] The solution to be set {@link ArrayList}.
 	 */
 	public void setSolution(ArrayList<State<T>> solution) {
 		this.solution = solution;

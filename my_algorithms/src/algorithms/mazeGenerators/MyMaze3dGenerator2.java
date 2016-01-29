@@ -30,8 +30,8 @@ public class MyMaze3dGenerator2 extends CommonMaze3dGenerator {
 	
 	/**
 	 * a code executing DFS algorithm
-	 * @param maze
-	 * @param stack
+	 * @param maze  [IN] The maze. {@link Maze3d}
+	 * @param stack [IN] The stack. {@link Stack}
 	 */
 	public void dfsGenerate(Maze3d maze ,Stack<Position> stack) {
 		

@@ -8,15 +8,13 @@ import java.util.HashSet;
  * BFS is a search problem solver using the Best First Search Algorithm.
  * 
  * @author Aviv Moran
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}.
  */
 public class BFS<T> extends CommonSearcher<T> {
 	
 	/**
 	 * BFS constructor, sending the given comparator to the CommonSearcher constructor.
 	 * 
-	 * @param cmp [IN] The wanted way of two states to be compared by in the priority queue.
+	 * @param comparator [IN] The wanted way of two states to be compared by in the priority queue.
 	 */
 	 public BFS(Comparator<State<T>> comparator) {
 		super(comparator);

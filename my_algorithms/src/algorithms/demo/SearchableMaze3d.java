@@ -44,7 +44,7 @@ public class SearchableMaze3d implements Searchable<Position> {
      * 
      * @param s [IN] The original state to move from {@link State}.
      * 
-     * @return [OUT] All the available neighbor states {@link ArrayList<State>}.
+     * @return [OUT] All the available neighbor states {@link ArrayList}.
      */
 	@Override
 	public ArrayList<State<Position>> getAllPossibleMoves(State<Position> s) {

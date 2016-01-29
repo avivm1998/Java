@@ -8,8 +8,6 @@ import java.util.PriorityQueue;
  * CommonSearcher is an abstract class that represents the common base of all the search problem solvers.
  * 
  * @author moranav
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}
  */
 
 public abstract class CommonSearcher<T> implements Searcher<T> {
@@ -75,7 +73,7 @@ public abstract class CommonSearcher<T> implements Searcher<T> {
 	  * 
 	  * @param dest [IN] The last state of the path from the entrance {@link State}.
 	  * 
-	  * @return [OUT] The path from the entrance to the given state {@link ArrayList<State>}
+	  * @return The path from the entrance to the given state {@link ArrayList}
 	  */
 	 public ArrayList<State<T>> backTrace(State<T> dest) {
 		ArrayList<State<T>> path = new ArrayList<State<T>>();

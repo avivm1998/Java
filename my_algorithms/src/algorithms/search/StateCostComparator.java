@@ -18,7 +18,7 @@ public class StateCostComparator<T> implements Comparator<State<T>> {
 	 * @param s1 [IN] The first state to be compared.
 	 * @param s2 [IN] The second sate to be compared.
 	 * 
-	 * @return [OUT] Negative number for s1 < s2 , Zero for s1 = s2 , and a positive number for s1 > s2
+	 * @return [OUT] The result.
 	 */
 	@Override
 	public int compare(State<T> s1, State<T> s2) {

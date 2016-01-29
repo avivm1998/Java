@@ -6,8 +6,6 @@ import java.util.Comparator;
  * AStar is a BFS type of search algorithm while using heuristics to decrease the number of iterations within the algorithm.
  * 
  * @author Aviv Moran
- *
- * @param <T> [IN] The class that will be used by the State<T> class {@link State<T>}
  */
 public class AStar<T> extends BFS<T> {
 	Heuristic<T> h;

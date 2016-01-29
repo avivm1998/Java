@@ -154,7 +154,7 @@ public class Maze3d implements Serializable {
 	 * 
 	 * @param pos [IN] The position of the cell {@link Position}.
 	 * 
-	 * @return [OUT] The walls the surround the cell {@link ArrayList<Position>}.
+	 * @return [OUT] The walls the surround the cell {@link ArrayList}.
 	 */
 	public ArrayList<Position> getNeigbooringWalls (Position pos) {
 		Direction[] allDirections = {Direction.UP, Direction.DOWN, Direction.FORWARDS, Direction.BACKWARDS, Direction.RIGHT, Direction.LEFT};
