@@ -7,8 +7,9 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -32,6 +33,7 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import client.presenter.Properties;
 
+
 /**
  * MazeWindow is the class that is in charge of our main window.
  * 
@@ -45,6 +47,8 @@ public class MazeWindow extends BasicWindow implements View {
 	String mazeName;
 	Properties settings;
 	int character_pickt;
+	Timer timer;
+	int index = 0;
 	
 	/**
 	 * Constructor with parameters.
@@ -55,6 +59,7 @@ public class MazeWindow extends BasicWindow implements View {
 	 */
 	public MazeWindow(String title, int width, int height) {
 		super(title, width, height);
+		timer = new Timer();
 	}
 
 	@Override
@@ -89,13 +94,19 @@ public class MazeWindow extends BasicWindow implements View {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				mazeDisplayer.showSolution = true;
+				/*
+				 * mazeDisplayer.showSolution = true;
 				getDisplay().syncExec(new Runnable() {
 					@Override
 					public void run() {
 						mazeDisplayer.redraw();
 					}
 				});
+				 */
+				
+				setChanged();
+				notifyObservers("solve " + mazeName + " " + settings.getSearchingAlogrithm());
+				
 			}
 			
 			@Override
@@ -338,13 +349,15 @@ public class MazeWindow extends BasicWindow implements View {
 						settings = (Properties)in.readObject();
 						in.close();
 						character_pickt = settings.getCharacter();
+						
+						//settings = new Properties();
 						setChanged();
 						notifyObservers(settings);
 					}
 				
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+				//} catch (FileNotFoundException e) {
+					//e.printStackTrace();
+				} catch (Exception e){}
 				
 				if(fileName != null) {
 					saveFile.setEnabled(true);
@@ -532,19 +545,54 @@ public class MazeWindow extends BasicWindow implements View {
 			}
 		});
 		
-		setChanged();
-		notifyObservers("solve " + mazeName + " " + settings.getSearchingAlogrithm());
+		//setChanged();
+		//notifyObservers("solve " + mazeName + " " + settings.getSearchingAlogrithm());
 	}
 	
 	@Override
 	public void display(Solution<Position> sol) {
-		mazeDisplayer.solution = sol;
+		/*
+		 * mazeDisplayer.solution = sol;
 		getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				mazeDisplayer.redraw();
 			}
 		});
+		 */
+		
+		mazeDisplayer.solution = sol;
+		System.out.println(sol);
+		timer.scheduleAtFixedRate((new TimerTask() {
+			
+			@Override
+			public void run() {
+				if(mazeDisplayer.player.position.equals(mazeDisplayer.maze.getExit())) {
+					this.cancel();
+					display.syncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							timer.cancel();
+							
+						}
+					});
+				}
+						
+				mazeDisplayer.move(sol.getSolution().get(index).getState());
+				System.out.println(sol.getSolution().get(index).getState() + " " + index);
+				index++;
+				
+				display.syncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						mazeDisplayer.redraw();
+					}
+				});
+			}
+		}), 0, 250);
+		
 	}
 	
 	@Override

@@ -70,7 +70,7 @@ public abstract class CommonCharacter {
 	 * Moving the character one step up.
 	 */
 	public void moveUp() {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() + 1);
 	}
 	
 	/**
@@ -107,6 +107,8 @@ public abstract class CommonCharacter {
 	public void moveBackward() {
 		position.setY(position.getY() + 1);
 	}
+	
+	
 	
 	/**
 	 * Drawing the character. 

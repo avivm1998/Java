@@ -81,4 +81,23 @@ public abstract class MazeDisplayer extends Canvas{
 	 */
 	public  abstract void moveRight();
 
+	public void move(Position next) {
+		if(player.position.getX() < next.getX()) {
+			setMazeData(maze.getFloorState(currentFloor + 1), currentFloor + 1);
+			player.moveUp();
+		}
+		else if(player.position.getX() > next.getX()) { 
+			setMazeData(maze.getFloorState(currentFloor - 1), currentFloor - 1);
+			player.moveDown();
+		}
+		else if(player.position.getY() < next.getY()) 
+			player.moveBackward();
+		else if(player.position.getY() > next.getY()) 
+			player.moveForward();
+		else if(player.position.getZ() < next.getZ()) 
+			player.moveRight();
+		else if(player.position.getZ() < next.getZ()) 
+			player.moveLeft();
+	}
+	
 }
